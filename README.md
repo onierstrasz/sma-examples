@@ -1,12 +1,8 @@
 # sma-examples
 
-This is an Iceberg repo for Pharo 6.1 containing demo examples for the Software Modeling and Analysis course.
+This is an Iceberg repo for Pharo 6.1 containing demo examples for the Software Modeling and Analysis course: <http://scg.unibe.ch/teaching/sma>
 
-	http://scg.unibe.ch/teaching/sma
-
-This repo resides on github:
-
-	https://github.com/onierstrasz/sma-examples
+This repo resides on github: <https://github.com/onierstrasz/sma-examples>
 
 This repo contains several packages of demo code, plus a class `SMA` with several class-side methods that each generates a Playground with code snippets.
 
