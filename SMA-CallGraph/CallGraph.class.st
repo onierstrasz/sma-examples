@@ -9,7 +9,7 @@ Class {
 		'methods',
 		'classes'
 	],
-	#category : #CallGraph
+	#category : #'SMA-CallGraph'
 }
 
 { #category : #examples }

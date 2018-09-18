@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'name'
 	],
-	#category : #CallGraph
+	#category : #'SMA-CallGraph'
 }
 
 { #category : #'as yet unclassified' }

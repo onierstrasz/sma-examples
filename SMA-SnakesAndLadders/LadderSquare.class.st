@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'forward'
 	],
-	#category : #SnakesAndLadders
+	#category : #'SMA-SnakesAndLadders'
 }
 
 { #category : #'instance creation' }

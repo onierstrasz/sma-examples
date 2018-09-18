@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'cg'
 	],
-	#category : #CallGraph
+	#category : #'SMA-CallGraph'
 }
 
 { #category : #running }

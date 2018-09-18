@@ -11,7 +11,7 @@ Class {
 		'returnType',
 		'argTypes'
 	],
-	#category : #CallGraph
+	#category : #'SMA-CallGraph'
 }
 
 { #category : #initialization }

@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'roll'
 	],
-	#category : #SnakesAndLadders
+	#category : #'SMA-SnakesAndLadders'
 }
 
 { #category : #playing }

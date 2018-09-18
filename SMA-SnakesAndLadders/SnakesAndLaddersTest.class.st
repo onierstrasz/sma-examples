@@ -10,7 +10,7 @@ Class {
 		'jack',
 		'jill'
 	],
-	#category : #SnakesAndLadders
+	#category : #'SMA-SnakesAndLadders'
 }
 
 { #category : #running }

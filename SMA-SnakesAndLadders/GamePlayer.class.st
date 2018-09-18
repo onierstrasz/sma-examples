@@ -10,7 +10,7 @@ Class {
 		'name',
 		'square'
 	],
-	#category : #SnakesAndLadders
+	#category : #'SMA-SnakesAndLadders'
 }
 
 { #category : #'instance creation' }

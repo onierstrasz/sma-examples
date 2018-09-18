@@ -13,7 +13,7 @@ Class {
 		'player',
 		'board'
 	],
-	#category : #SnakesAndLadders
+	#category : #'SMA-SnakesAndLadders'
 }
 
 { #category : #playing }

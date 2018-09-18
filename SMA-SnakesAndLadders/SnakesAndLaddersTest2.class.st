@@ -4,7 +4,7 @@ Some tests for a second example.
 Class {
 	#name : #SnakesAndLaddersTest2,
 	#superclass : #SnakesAndLaddersTest,
-	#category : #SnakesAndLadders
+	#category : #'SMA-SnakesAndLadders'
 }
 
 { #category : #running }

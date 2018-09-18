@@ -9,7 +9,7 @@ Class {
 		'args',
 		'caller'
 	],
-	#category : #CallGraph
+	#category : #'SMA-CallGraph'
 }
 
 { #category : #accessing }

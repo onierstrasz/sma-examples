@@ -4,7 +4,7 @@ Demonstrate the relationship between classes and metaclasses
 Class {
 	#name : #MetaclassHierarchyTest,
 	#superclass : #TestCase,
-	#category : #SnakesAndLadders
+	#category : #'SMA-SnakesAndLadders'
 }
 
 { #category : #running }

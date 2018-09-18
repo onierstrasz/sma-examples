@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'players'
 	],
-	#category : #SnakesAndLadders
+	#category : #'SMA-SnakesAndLadders'
 }
 
 { #category : #printing }

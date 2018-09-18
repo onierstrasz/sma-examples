@@ -1,7 +1,7 @@
 Class {
 	#name : #CallGraphTest,
 	#superclass : #TestCase,
-	#category : #CallGraph
+	#category : #'SMA-CallGraph'
 }
 
 { #category : #tests }

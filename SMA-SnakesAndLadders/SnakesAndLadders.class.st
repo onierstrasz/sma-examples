@@ -18,7 +18,7 @@ Class {
 		'die',
 		'over'
 	],
-	#category : #SnakesAndLadders
+	#category : #'SMA-SnakesAndLadders'
 }
 
 { #category : #documentation }

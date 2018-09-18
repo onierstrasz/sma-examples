@@ -5,7 +5,7 @@ Responsibilities:
 Class {
 	#name : #Die,
 	#superclass : #Object,
-	#category : #SnakesAndLadders
+	#category : #'SMA-SnakesAndLadders'
 }
 
 { #category : #playing }
