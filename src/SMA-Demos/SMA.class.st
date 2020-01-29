@@ -42,11 +42,12 @@ SMA class >> callGraphDemo [
 	"NB -- this file uses classic Mac OS linefeeds."
 
 	GTPlayground openContents: '"CallGraph Demo snippets"
-| cg |
-cg := CallGraph new from: ''Calls.txt'' asFileReference contents.
+| cg callFile |
+callFile := FileLocator imageDirectory asFileReference / ''pharo-local/iceberg/onierstrasz/sma-examples/CallGraphDemo/Calls.txt''.
+cg := CallGraph new from: callFile contents.
 cg calls size.
 
-(CallGraph fromFile: ''Calls.txt'') calls size.
+(CallGraph fromFile: callFile) calls size.
 
 "Collection demo"
 #(1 2 3 4) includes: 5.
@@ -65,7 +66,7 @@ cg calls size.
   into: [:sum :each | sum + each].
 
 "Creating Calls, Methods and Classes"
-(CallGraph fromFile: ''Calls.txt'') methods size.
+(CallGraph fromFile: callFile) methods size.
 
 "Duck Typing Symbols for Blocks"
 #factorial value: 5.
@@ -74,12 +75,12 @@ cg calls size.
 (Symbol>>#value:) browse.
 
 "JClass"
-(CallGraph fromFile: ''Calls.txt'') methods size.
-(CallGraph fromFile: ''Calls.txt'') classes size.
-((CallGraph fromFile: ''Calls.txt'') methods
+(CallGraph fromFile: callFile) methods size.
+(CallGraph fromFile: callFile) classes size.
+((CallGraph fromFile: callFile) methods
   select: [ :m | m calls size > 1 ]) size.
 
-((CallGraph fromFile: ''Calls.txt'') methods select: #isPolymorphic)
+((CallGraph fromFile: callFile) methods select: #isPolymorphic)
   collect: [ :each | each -> (each calls collect: #args) asSet ].
 
 ' label: 'CallGraph Demo'.

@@ -22,8 +22,8 @@ CallGraph class >> example [
 ]
 
 { #category : #'instance creation' }
-CallGraph class >> fromFile: fileName [
-  ^ self new from: fileName asFileReference contents
+CallGraph class >> fromFile: fileReference [
+  ^ self new from: fileReference contents
 ]
 
 { #category : #accessing }
