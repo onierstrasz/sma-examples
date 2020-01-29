@@ -24,7 +24,7 @@ Metacello new
 
 To generate the Playground run:
 
-`SMA callGraph.`
+`SMA callGraphDemo.`
 
 ## Understanding Classes and Metaclasses
 
