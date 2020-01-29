@@ -10,6 +10,6 @@ BaselineOfSMASnakesAndLadders >> baseline: spec [
 
 	spec for: #'common' do: [
 		spec 
-		package: #'SMA-SnakesAndLadders' with: [ spec requires: 'SMA-Demos' ] ].
+		package: #'SMA-SnakesAndLadders' with: [ spec requires: 'SMADemos' ] ].
 
 ]
