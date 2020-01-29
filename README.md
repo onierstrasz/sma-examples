@@ -13,16 +13,46 @@ The folder CallGraphDemo contains a series of fileouts containing 5 successive v
 
 The completed project is in the package `SMA-CallGraph`.
 
+Load:
+
+```
+Metacello new
+   baseline: 'SMACallGraph';
+   repository: 'github://onierstrasz/sma-examples/src';
+   load
+```
+
 To generate the Playground run:
 
 `SMA callGraph.`
 
 ## Understanding Classes and Metaclasses
 
-This lecture illustrates the Smalltalk object model using an example of a Snakes and Ladders game. Load `SMA_SNakesAndLadders` and run `SMA metaclassDemo` to obtain the snippet Playground.
+This lecture illustrates the Smalltalk object model using an example of a Snakes and Ladders game.
+
+Load:
+
+```
+Metacello new
+   baseline: 'SMASnakesAndLadders';
+   repository: 'github://onierstrasz/sma-examples/src';
+   load
+```
+
+and run `SMA metaclassDemo` to obtain the snippet Playground.
 
 ## Reflection and Metaprogramming
 
 This lecture illustrates reflective features of Smalltalk.
-The demos are in the package `SMA-Reflection`. Run `SMA reflectionDemo` to obtain the snippets.
+The demos are in the package `SMA-Reflection`.
+Load:
+
+```
+Metacello new
+   baseline: 'SMAReflection';
+   repository: 'github://onierstrasz/sma-examples/src';
+   load
+```
+
+Run `SMA reflectionDemo` to obtain the snippets.
 
