@@ -9,10 +9,10 @@ BaselineOfSMASnakesAndLadders >> baseline: spec [
 	<baseline>
 	spec
 		for: #common
-		do: [ spec
-				baseline: 'SMA-Demos'
-				with: [ spec repository: 'github://onierstrasz/sma-examples/src' ].
+		do: [ 
 			spec
-				package: #'SMA-SnakesAndLadders'
-				with: [ spec requires: 'SMA-Demos' ] ]
+				package: 'SMA-Demos'.
+			spec
+			package: #'SMA-SnakesAndLadders'
+	]
 ]
