@@ -1,11 +1,11 @@
 Class {
-	#name : #BaselineOfSMACallGraphDemo,
+	#name : #BaselineOfSMACallGraph,
 	#superclass : #BaselineOf,
-	#category : #BaselineOfSMACallGraphDemo
+	#category : #BaselineOfSMACallGraph
 }
 
 { #category : #baselines }
-BaselineOfSMACallGraphDemo >> baseline: spec [
+BaselineOfSMACallGraph >> baseline: spec [
 	<baseline>
 	spec
 		for: #common
