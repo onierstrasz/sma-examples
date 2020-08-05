@@ -9,7 +9,9 @@ Class {
 
 { #category : #running }
 CallGraphFileTest >> setUp [
-	cg := CallGraph fromFile: 'Calls.txt'.
+	cg := CallGraph
+		fromFile:
+			'pharo-local/iceberg/onierstrasz/sma-examples/CallGraphDemo/Calls.txt' asFileReference 
 ]
 
 { #category : #tests }

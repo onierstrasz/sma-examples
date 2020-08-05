@@ -43,7 +43,7 @@ SMA class >> callGraphDemo [
 
 	GTPlayground openContents: '"CallGraph Demo snippets"
 | cg callFile |
-callFile := FileLocator imageDirectory asFileReference / ''pharo-local/iceberg/onierstrasz/sma-examples/CallGraphDemo/Calls.txt''.
+callFile := ''pharo-local/iceberg/onierstrasz/sma-examples/CallGraphDemo/Calls.txt'' asFileReference.
 cg := CallGraph new from: callFile contents.
 cg calls size.
 
