@@ -32,3 +32,15 @@ Call >> caller: locationString [
 	"NB: missing full signature, so we cannot identify the unique method"
 	caller := locationString
 ]
+
+{ #category : #printing }
+Call >> printOn: aStream [
+	aStream
+		nextPutAll: caller;
+		nextPutAll: '(';
+		nextPutAll: args;
+		nextPutAll: ') -> ';
+		nextPutAll: callee name;
+		cr
+
+]

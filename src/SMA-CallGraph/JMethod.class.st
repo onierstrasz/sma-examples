@@ -45,6 +45,11 @@ JMethod >> isStatic [
 	^ owner isStatic
 ]
 
+{ #category : #accessing }
+JMethod >> name [
+	^ name
+]
+
 { #category : #initialization }
 JMethod >> name: aString [ 
 	name := aString
@@ -53,6 +58,14 @@ JMethod >> name: aString [
 { #category : #initialization }
 JMethod >> owner: aJClass [ 
 	owner := aJClass
+]
+
+{ #category : #printing }
+JMethod >> printOn: aStream [
+	aStream
+		nextPutAll: name;
+		cr
+
 ]
 
 { #category : #initialization }

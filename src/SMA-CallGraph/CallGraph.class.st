@@ -40,8 +40,8 @@ CallGraph >> classes [
 CallGraph >> createCall: callString [
 	| fields callee owner call |
 	fields := $| split: callString.
-	self assert: fields size = 5.
-	self assert: (fields at: 1) size = 0.
+	self assert: fields size equals: 5.
+	self assert: (fields at: 1) size equals: 0.
 	callee := self getMethod: (fields at: 2).
 	owner := self getClass: (fields at: 3).
 	callee owner: owner.

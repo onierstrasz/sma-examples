@@ -10,12 +10,20 @@ Class {
 	#category : #'SMA-CallGraph'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 JClass >> isStatic [
 	^ name = 'STATIC_METHOD'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 JClass >> name: classNameOrStatic [ 
 	name := classNameOrStatic
+]
+
+{ #category : #printing }
+JClass >> printOn: aStream [
+	aStream
+		nextPutAll: name;
+		cr
+
 ]
