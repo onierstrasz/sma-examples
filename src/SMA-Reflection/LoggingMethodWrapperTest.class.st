@@ -6,20 +6,20 @@ Class {
 
 { #category : #running }
 LoggingMethodWrapperTest >> testDelegation [
+
 	| logger |
-	logger := LoggingMethodWrapper on: Integer>>#factorial.
-	
+	logger := LoggingMethodWrapper on: Integer >> #slowFactorial.
+
 	self assert: logger invocationCount equals: 0.
-	5 factorial.
+	5 slowFactorial.
 	self assert: logger invocationCount equals: 0.
-	
+
 	logger install.
-	[ 5 factorial ] ensure: [logger uninstall].
+	[ 5 slowFactorial ] ensure: [ logger uninstall ].
 	self assert: logger invocationCount equals: 6.
-	
+
 	Integer flushCache.
-	
-	10 factorial.
-	self assert: logger invocationCount equals: 6.
-	
+
+	10 slowFactorial.
+	self assert: logger invocationCount equals: 6
 ]

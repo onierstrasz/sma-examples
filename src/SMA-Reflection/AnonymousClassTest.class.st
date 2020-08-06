@@ -6,15 +6,11 @@ Class {
 
 { #category : #'as yet unclassified' }
 AnonymousClassTest >> testAnon [
+
 	| anonClass set |
-	"anonClass := Class new.
-	anonClass superclass: Set;
-		setFormat: Set format."
-	
 	anonClass := Set newAnonymousSubclass.
 
-	anonClass compile:
-		'add: anObject
+	anonClass compile: 'add: anObject
 			Transcript show: ''adding '', anObject printString; cr.
 			^ super add: anObject'.
 
@@ -24,5 +20,5 @@ AnonymousClassTest >> testAnon [
 
 	set primitiveChangeClassTo: anonClass basicNew.
 	set add: 2.
-	self assert: set size equals: 2.
+	self assert: set size equals: 2
 ]
