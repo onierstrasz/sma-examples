@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #scripts }
-SMAForGt class >> callGraphPlayground [
+SMAForGt class >> callGraphPlaygroundPage [
 	<gtExample>
 	| aPage |
 	aPage := GtPlayPage newDefault.
@@ -39,4 +39,26 @@ SMAForGt class >> callGraphPlayground [
 		do:
 			[ :source | aPage addSnippet: (GtCoderSnippet new sourceCode: source) ].
 	^ aPage
+]
+
+{ #category : #accessing }
+SMAForGt class >> openCallGraphPlayground [
+	<gtExample>
+	self
+		openPlayGround: 'CallGraph Demo'
+		withPage: self callGraphPlaygroundPage
+]
+
+{ #category : #accessing }
+SMAForGt class >> openPlayGround: aString withPage: aPage [
+	| gtworld space pager |
+	pager := GtPlaygroundStencil new create removeAllPages
+		addWrapped: aPage.
+	space := BlSpace new
+		title: aString;
+		addChild: pager;
+		withHalos.
+	gtworld := GtWorld new.
+	gtworld root showSpace: space.
+	gtworld show
 ]
