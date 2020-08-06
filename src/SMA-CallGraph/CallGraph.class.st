@@ -22,8 +22,10 @@ CallGraph class >> example [
 ]
 
 { #category : #'instance creation' }
-CallGraph class >> fromFile: fileReference [
-  ^ self new from: fileReference contents
+CallGraph class >> fromFile: filePath [
+
+	^ self new from:
+		  (FileLocator imageDirectory asFileReference / filePath) contents
 ]
 
 { #category : #accessing }
