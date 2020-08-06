@@ -7,9 +7,11 @@ Class {
 { #category : #'as yet unclassified' }
 AnonymousClassTest >> testAnon [
 	| anonClass set |
-	anonClass := Class new.
+	"anonClass := Class new.
 	anonClass superclass: Set;
-		setFormat: Set format.
+		setFormat: Set format."
+	
+	anonClass := Set newAnonymousSubclass.
 
 	anonClass compile:
 		'add: anObject

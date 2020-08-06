@@ -35,10 +35,10 @@ ReflectionTest >> testBecomeForward [
 
 { #category : #running }
 ReflectionTest >> testPrimitiveChangeClassTo [
+
 	| anon anObject |
-	anon := Class new.	"NB: an anonymous class"
-	anon superclass: Object.
-	anon setFormat: Object format.
+	anon := Object newAnonymousSubclass.
+
 	anObject := Object new.
 	anObject primitiveChangeClassTo: anon new.
 	anon compile: 'thisIsATest ^ 2'.
