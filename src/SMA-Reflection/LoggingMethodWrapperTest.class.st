@@ -6,20 +6,18 @@ Class {
 
 { #category : #running }
 LoggingMethodWrapperTest >> testDelegation [
+	"NB: In Pharo 9, factorial is not recursive."
 
 	| logger |
-	logger := LoggingMethodWrapper on: Integer >> #slowFactorial.
-
+	logger := LoggingMethodWrapper on: Integer >> #factorial.
 	self assert: logger invocationCount equals: 0.
-	5 slowFactorial.
+	5 factorial.
 	self assert: logger invocationCount equals: 0.
-
 	logger install.
-	[ 5 slowFactorial ] ensure: [ logger uninstall ].
+	[ 5 factorial ]
+		ensure: [ logger uninstall ].
 	self assert: logger invocationCount equals: 6.
-
 	Integer flushCache.
-
-	10 slowFactorial.
+	10 factorial.
 	self assert: logger invocationCount equals: 6
 ]
