@@ -105,35 +105,59 @@ Collection allSuperclasses' . 'Collection allSelectors'.
 	'Collection allSubclasses' . 'Collection linesOfCode'.
 	'"Find implementors in Pharo (in Morphic World)"
 SystemNavigation default browseAllImplementorsOf: #,'.
-
-'"Find implementors in Gt"
+	'"Find implementors in Gt"
 #, gtImplementors'.
 	'"Find all super-sends in Collection hierarchy"
 (Collection withAllSubclasses flatCollect: #methodDict) select: #sendsToSuper'.
-
-
-
-	'"Finding super-sends to other methods"
+	'"Finding super-sends to other methods.
+Sending a different message to super is considered a bad smell -- you should send to self instead.
+Explore the result and see if you agree."
 (CompiledMethod allInstances select: #sendsToSuper)
   select: [ :m | 
     (m sendNodes select:
       [ :send | send isSuperSend and: [ m selector ~= send selector ] ])
-    isNotEmpty ]' . 
+    isNotEmpty ]' .
+    
+    
+     '"In case the snippet above fails due to a syntactically incorrect CompiledMethod!"
+(CompiledMethod allInstances select: #sendsToSuper)
+  select: [ :m | 
+    [(m sendNodes select:
+      [ :send | send isSuperSend and: [ m selector ~= send selector ] ])
+    isNotEmpty] on: Error do: [ false ] ]'.
     
     
     
-    
-    '"Accessing the stack"
+	'"Accessing the stack"
 thisContext inspect. self halt.
-"Evaluate the above line, and then in the Inspector run: self stack inspect"'.
-	'"Halt demo"
-HaltDemo new foo. "does not halt"' . 'HaltDemo new bar. "triggers debugger"'.
-	'"Minimal objects"
+"Evaluate the above line. This will open an Inspector and a Debugger. In the Inspector inspect: 
+  self stack
+Compare the Inspector view with the Debugger view."'.
+
+
+
+	'"Halt demo. Illustrates conditional breakpoints."
+HaltDemo new foo "does not halt"' . 
+
+
+
+'"The breakpoint is only applied if the caller is ''bar''"
+HaltDemo new bar "triggers debugger"'.
+
+
+
+
+'"Minimal objects"
+| point |
 point := 1@2.
 LoggingProxy for: point.
 point.
 "inspect to see that the point has been replace by a proxy."'.
-	'"Anonymous classes"
+
+
+
+'"Anonymous classes"
+| anonClass set |
 Transcript open.
 anonClass := Class new.
 anonClass
@@ -147,8 +171,11 @@ anonClass
 set := Set new.
 set add: 1.
 set primitiveChangeClassTo: anonClass basicNew.
-set add: 2' . '"Method wrappers"
+set add: 2' . 
 
+
+'"Method wrappers"
+| logger |
 logger := LoggingMethodWrapper on: Integer>>#factorial.
 
 logger invocationCount.
