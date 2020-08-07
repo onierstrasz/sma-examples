@@ -147,22 +147,23 @@ HaltDemo new bar "triggers debugger"'.
 
 
 
-'"Minimal objects"
+'"Minimal objects.
+Open an Inspector window to see that the point has been replaced by a proxy."
 | point |
 point := 1@2.
 LoggingProxy for: point.
-point.
-"inspect to see that the point has been replace by a proxy."'.
+point inspect'.
 
 
 
-'"Anonymous classes"
+'"Anonymous classes
+CONTINUE HERE"
+
+
 | anonClass set |
-Transcript open.
-anonClass := Class new.
-anonClass
-	superclass: Set;
-	setFormat: Set format.
+anonClass := Set newAnonymousSubclass.
+
+
 anonClass
 	compile:
 		''add: anObject
@@ -171,7 +172,12 @@ anonClass
 set := Set new.
 set add: 1.
 set primitiveChangeClassTo: anonClass basicNew.
-set add: 2' . 
+set add: 2
+
+
+
+
+' . 
 
 
 '"Method wrappers"
