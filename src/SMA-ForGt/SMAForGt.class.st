@@ -56,29 +56,20 @@ SMAForGt class >> callGraphSlideahow [
 		addSlide:
 			(GtTitleSlide new
 				titleText: ('CallGraph Demo' asRopedText fontSize: 70)).
-				
 	show
 		addSlide:
 			(GtTextAndElementSlide new
-				newTextWithFormat: ('Opening a file in an inpector.' asRopedText fontSize: 36
-
-);
+				newTextWithFormat: ('Opening a file in an inpector.' asRopedText fontSize: 36);
 				newText: 'NB: First copy the file Calls.txt to the image directory.';
 				element: [ GtPlaygroundSlide new
-						snippets:
-							{
-'
-''Calls.txt'' asFileReference'
-							
-							
-							};
+						snippets: {'
+''Calls.txt'' asFileReference'};
 						asElement ]).
-						
 	show
 		addSlide:
-			(GtLabelAndElementSlide new
-				newTextWithFormat: 'Collections API';
-				stencil: [ GtPlaygroundSlide new
+			(GtTextAndElementSlide new
+				newText: 'Collections API';
+				element: [ GtPlaygroundSlide new
 						snippets:
 							{'#(1 2 3 4) includes: 5' . '#(1 2 3 4) size' . '#(1 2 3 4) isEmpty'.
 							'#(1 2 3 4) contains: [:some | some < 0 ]'};
@@ -86,15 +77,48 @@ SMAForGt class >> callGraphSlideahow [
 	show
 		addSlide:
 			(GtTextAndElementSlide new
-				newTextWithFormat: ('The Transcript is a kind of system log' asRopedText fontSize: 20);
+				newText: 'The Transcript is a kind of system log';
 				element: [ GtPlaygroundSlide new
 						snippets:
-							{'Transcript open' . '#(1 2 3 4) 
-	do: [:each | Transcript show: each ]'.
+							{'Transcript open' . '#(1 2 3 4) do:
+[:each | Transcript show: each ]'.
 							'#(1 2 3 4) with: #(5 6 7 8)
-	do: [:x : y | Transcript show: x+y; cr]'};
-						asElement ];
-				elementWeight: 0.6).
+do: [:x : y | Transcript show: x+y; cr]'};
+						asElement ]).
+	show
+		addSlide:
+			(GtTextAndElementSlide new
+				newText: 'More collections API';
+				element: [ GtPlaygroundSlide new
+						snippets:
+							{'#(1 2 3 4) select: [:each | each odd ]'.
+							'#(1 2 3 4) reject: [:each | each odd ]'.
+							'#(1 2 3 4) detect: [:each | each odd ]'.
+							'#(1 2 3 4) collect: [:each | each even ]'.
+							'#(1 2 3 4) inject: 0
+into: [:sum :each | sum + each]'};
+						asElement ]).
+	show
+		addSlide:
+			(GtTextAndElementSlide new
+				newText: 'Blocks are first-class, anonymous functions';
+				newText: 'Duck Typing Symbols for Blocks';
+				element: [ GtPlaygroundSlide new
+						snippets:
+							{'5 factorial' . '[ :arg | arg factorial ] value: 5'.
+							'#factorial value: 5' . 'Symbol>>#value:' . '5 perform: #factorial'};
+						asElement ]).
+	show
+		addSlide:
+			(GtTextAndElementSlide new
+				newText: 'Exploring the Call Graph';
+				element: [ GtPlaygroundSlide new
+						snippets:
+							{'CallGraph fromFile: ''Calls.txt''' . '((CallGraph fromFile: ''Calls.txt'') methods
+select: [ :m | m calls size > 1 ]) size'.
+							'((CallGraph fromFile: ''Calls.txt'') methods select: #isPolymorphic)
+collect: [ :each | each -> (each calls collect: #args) asSet ]'};
+						asElement ]).
 	show makeArrowsVisible.
 	^ show
 ]
