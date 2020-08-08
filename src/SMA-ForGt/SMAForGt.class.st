@@ -61,39 +61,40 @@ SMAForGt class >> callGraphSlideshow [
 			(GtTextAndElementSlide new
 				newTextWithFormat: ('Getting started.' asRopedText fontSize: 36);
 				newText: 'You can download Gt from https://gtoolkit.com/download/';
-								newText: 'Evaluate the two snippets to load this project from github, and instantiate this slideshow';
+				newText:
+					'Evaluate the two snippets to load this project from github, and instantiate this slideshow';
 				element: [ GtPlaygroundSlide new
-						snippets: {
-						'Metacello new baseline: ''SMAForGt''; repository: ''github://onierstrasz/sma-examples/src''; load.'
-
-						.
-						
-						'SMAForGt openSlideshowsOverview'};
+						snippets:
+							{'Metacello new baseline: ''SMAForGt''; repository: ''github://onierstrasz/sma-examples/src''; load.'.
+							'SMAForGt openSlideshowsOverview'};
 						asElement ]).
 	show
 		addSlide:
 			(GtTextAndElementSlide new
 				newTextWithFormat: ('The Playground.' asRopedText fontSize: 36);
 				newText:
-					'The Playground is a place to evaluate arbitrary Smalltalk expressions';
-				newText: 'Evaluating an expression opens an "inspector" on the result';
-				newText: 'Note the various possibilities to execute a snippet, and the ways to explore the result.';
+					'The Playground is a place to evaluate arbitrary Smalltalk expressions.';
+				newText:
+					'Right-click next to the expression to see what you can do. Also see the tooltip descriptions of the various buttons.';
+				newText: 'Inspecting an expression opens an Inspector on the result.';				
+				newText: 'Lifting up the gray bar at the bottom of the Inpsctor reveals a new evaluation pane for that object. Evaluate ''self size'' there.';
 				element: [ GtPlaygroundSlide new
-						snippets: {'Hello world'};
+						snippets: {'''Hello world'''};
 						asElement ]).
 	show
 		addSlide:
 			(GtTextAndElementSlide new
-				newTextWithFormat: ('TITLE.' asRopedText fontSize: 36);
-				newText: 'TEXT';
-				element: [ GtPlaygroundSlide new
-						snippets: {''};
-						asElement ]).
-	show
-		addSlide:
-			(GtTextAndElementSlide new
-				newTextWithFormat: ('Opening a file in an inpector.' asRopedText fontSize: 36);
-				newText: 'NB: First copy the file Calls.txt to the image directory.';
+				newTextWithFormat: ('Opening a file' asRopedText fontSize: 36);
+				newText:
+					'Evaluate the snippet to obtain a view of the File object. (NB: First copy the file Calls.txt to the image directory.)';
+				newText:
+					'You can also evaluate ''self contents'' on the result to obtain the contents of the File as a String object.';
+				newText:
+					'How is asFileReference implemented? Just click on the little triangle to the right of the message.';
+				newText:
+					'Which classes implement this method? Select the message and type <CMD>-M (for iMplementors).';
+				newText: 'Also try <CMD>-N (for seNders).';
+				newText: 'There are many ways to navigate to a class browser. One easy way is to go to the Meta tab.';
 				element: [ GtPlaygroundSlide new
 						snippets: {'
 ''Calls.txt'' asFileReference'};
