@@ -76,8 +76,9 @@ SMAForGt class >> callGraphSlideshow [
 					'The Playground is a place to evaluate arbitrary Smalltalk expressions.';
 				newText:
 					'Right-click next to the expression to see what you can do. Also see the tooltip descriptions of the various buttons.';
-				newText: 'Inspecting an expression opens an Inspector on the result.';				
-				newText: 'Lifting up the gray bar at the bottom of the Inpsctor reveals a new evaluation pane for that object. Evaluate ''self size'' there.';
+				newText: 'Inspecting an expression opens an Inspector on the result.';
+				newText:
+					'Lifting up the gray bar at the bottom of the Inpsctor reveals a new evaluation pane for that object. Evaluate ''self size'' there.';
 				element: [ GtPlaygroundSlide new
 						snippets: {'''Hello world'''};
 						asElement ]).
@@ -94,7 +95,8 @@ SMAForGt class >> callGraphSlideshow [
 				newText:
 					'Which classes implement this method? Select the message and type <CMD>-M (for iMplementors).';
 				newText: 'Also try <CMD>-N (for seNders).';
-				newText: 'There are many ways to navigate to a class browser. One easy way is to go to the Meta tab.';
+				newText:
+					'There are many ways to navigate to a class browser. One easy way is to go to the Meta tab.';
 				element: [ GtPlaygroundSlide new
 						snippets: {'
 ''Calls.txt'' asFileReference'};
@@ -107,7 +109,8 @@ SMAForGt class >> callGraphSlideshow [
 						snippets:
 							{'#(1 2 3 4) includes: 5' . '#(1 2 3 4) size' . '#(1 2 3 4) isEmpty'.
 							'#(1 2 3 4) contains: [:some | some < 0 ]'};
-						asElement ]).
+						asElement ];
+				elementWeight: 0.8).
 	show
 		addSlide:
 			(GtTextAndElementSlide new
@@ -131,7 +134,8 @@ do: [:x : y | Transcript show: x+y; cr]'};
 							'#(1 2 3 4) collect: [:each | each even ]'.
 							'#(1 2 3 4) inject: 0
 into: [:sum :each | sum + each]'};
-						asElement ]).
+						asElement ];
+				elementWeight: 0.8).
 	show
 		addSlide:
 			(GtTextAndElementSlide new
