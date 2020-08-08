@@ -47,7 +47,7 @@ CallGraph fromFile: ''Calls.txt'''.
 ]
 
 { #category : #accessing }
-SMAForGt class >> callGraphSlideahow [
+SMAForGt class >> callGraphSlideshow [
 	"SMAForGt openSlideshowInNewSpace: SMAForGt callGraphSlideahow"
 
 	| show |
@@ -148,6 +148,29 @@ SMAForGt class >> openSlideshowInNewSpace: aSlideshow [
 		title: 'Space';
 		extent: 1200 @ 600;
 		addChild: aSlideshow create;
+		withHalos;
+		show
+]
+
+{ #category : #accessing }
+SMAForGt class >> openSlideshowsOverview [
+	"SMAForGt openSlideshowsOverview"
+
+	| helper container |
+	helper := GtHomeSlideShowsSection new.
+	container := helper newCardsContainer.
+	container
+		addChild:
+			(helper
+				newShowCardWithTitle: 'Callgraph Demo'
+				slideshow: [ SMAForGt callGraphSlideshow ]
+				description:
+					'See how the Smalltalk collection classes can be used to perform some basic callgraph analysis.').
+	"sectionContainer addChild: cardsContainer."
+	BlSpace new
+		title: 'Space';
+		extent: 800 @ 600;
+		addChild: container;
 		withHalos;
 		show
 ]
