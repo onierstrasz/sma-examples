@@ -47,6 +47,59 @@ CallGraph fromFile: ''Calls.txt'''.
 ]
 
 { #category : #accessing }
+SMAForGt class >> callGraphSlideahow [
+	"SMAForGt openSlideshowInNewSpace: SMAForGt callGraphSlideahow"
+
+	| show |
+	show := GtSlideShow new.
+	show
+		addSlide:
+			(GtTitleSlide new
+				titleText: ('CallGraph Demo' asRopedText fontSize: 70)).
+				
+	show
+		addSlide:
+			(GtTextAndElementSlide new
+				newTextWithFormat: ('Opening a file in an inpector.' asRopedText fontSize: 36
+
+);
+				newText: 'NB: First copy the file Calls.txt to the image directory.';
+				element: [ GtPlaygroundSlide new
+						snippets:
+							{
+'
+''Calls.txt'' asFileReference'
+							
+							
+							};
+						asElement ]).
+						
+	show
+		addSlide:
+			(GtLabelAndElementSlide new
+				newTextWithFormat: 'Collections API';
+				stencil: [ GtPlaygroundSlide new
+						snippets:
+							{'#(1 2 3 4) includes: 5' . '#(1 2 3 4) size' . '#(1 2 3 4) isEmpty'.
+							'#(1 2 3 4) contains: [:some | some < 0 ]'};
+						asElement ]).
+	show
+		addSlide:
+			(GtTextAndElementSlide new
+				newTextWithFormat: ('The Transcript is a kind of system log' asRopedText fontSize: 20);
+				element: [ GtPlaygroundSlide new
+						snippets:
+							{'Transcript open' . '#(1 2 3 4) 
+	do: [:each | Transcript show: each ]'.
+							'#(1 2 3 4) with: #(5 6 7 8)
+	do: [:x : y | Transcript show: x+y; cr]'};
+						asElement ];
+				elementWeight: 0.6).
+	show makeArrowsVisible.
+	^ show
+]
+
+{ #category : #accessing }
 SMAForGt class >> metaclassDemoPlaygroundPage [
 	<gtExample>
 	<todo: 'Annotate with some explanations'>
@@ -66,7 +119,19 @@ SnakesAndLadders example'.
 ]
 
 { #category : #accessing }
+SMAForGt class >> openSlideshowInNewSpace: aSlideshow [
+	BlSpace new
+		title: 'Space';
+		extent: 1200 @ 600;
+		addChild: aSlideshow create;
+		withHalos;
+		show
+]
+
+{ #category : #accessing }
 SMAForGt class >> openSnippetPlaygrounds [
+	"SMAForGt openSnippetPlaygrounds"
+
 	| pages spaces |
 	pages := {('CallGraph Demo' -> SMAForGt callGraphPlaygroundPage).
 	('Reflection Demo' -> SMAForGt reflectionDemoPlaygroundPage).
