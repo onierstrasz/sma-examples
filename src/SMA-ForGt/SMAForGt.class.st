@@ -48,7 +48,7 @@ CallGraph fromFile: ''Calls.txt'''.
 
 { #category : #accessing }
 SMAForGt class >> callGraphSlideshow [
-	"SMAForGt openSlideshowInNewSpace: SMAForGt callGraphSlideahow"
+	"SMAForGt openSlideshowInNewSpace: SMAForGt callGraphSlideshow"
 
 	| show |
 	show := GtSlideShow new.
@@ -56,6 +56,39 @@ SMAForGt class >> callGraphSlideshow [
 		addSlide:
 			(GtTitleSlide new
 				titleText: ('CallGraph Demo' asRopedText fontSize: 70)).
+	show
+		addSlide:
+			(GtTextAndElementSlide new
+				newTextWithFormat: ('Getting started.' asRopedText fontSize: 36);
+				newText: 'You can download Gt from https://gtoolkit.com/download/';
+								newText: 'Evaluate the two snippets to load this project from github, and instantiate this slideshow';
+				element: [ GtPlaygroundSlide new
+						snippets: {
+						'Metacello new baseline: ''SMAForGt''; repository: ''github://onierstrasz/sma-examples/src''; load.'
+
+						.
+						
+						'SMAForGt openSlideshowsOverview'};
+						asElement ]).
+	show
+		addSlide:
+			(GtTextAndElementSlide new
+				newTextWithFormat: ('The Playground.' asRopedText fontSize: 36);
+				newText:
+					'The Playground is a place to evaluate arbitrary Smalltalk expressions';
+				newText: 'Evaluating an expression opens an "inspector" on the result';
+				newText: 'Note the various possibilities to execute a snippet, and the ways to explore the result.';
+				element: [ GtPlaygroundSlide new
+						snippets: {'Hello world'};
+						asElement ]).
+	show
+		addSlide:
+			(GtTextAndElementSlide new
+				newTextWithFormat: ('TITLE.' asRopedText fontSize: 36);
+				newText: 'TEXT';
+				element: [ GtPlaygroundSlide new
+						snippets: {''};
+						asElement ]).
 	show
 		addSlide:
 			(GtTextAndElementSlide new
@@ -165,7 +198,7 @@ SMAForGt class >> openSlideshowsOverview [
 				newShowCardWithTitle: 'Callgraph Demo'
 				slideshow: [ SMAForGt callGraphSlideshow ]
 				description:
-					'See how the Smalltalk collection classes can be used to perform some basic callgraph analysis.').
+					'A quick introduction to Smalltalk and GT using a running example of call graph analysis.').
 	"sectionContainer addChild: cardsContainer."
 	BlSpace new
 		title: 'Space';
