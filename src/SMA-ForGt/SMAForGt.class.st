@@ -92,7 +92,8 @@ SMAForGt class >> addCallGraphGettingStartedTo: show [
 						snippets:
 							{'Metacello new baseline: ''SMAForGt''; repository: ''github://onierstrasz/sma-examples/src''; load.'.
 							'SMAForGt openSlideshowsOverview'};
-						asElement ]).
+						asElement ];
+				elementWeight: 0.6).
 	show
 		addSlide:
 			(GtTextAndElementSlide new
@@ -106,7 +107,8 @@ SMAForGt class >> addCallGraphGettingStartedTo: show [
 					'Lifting up the gray bar at the bottom of the Inpsctor reveals a new evaluation pane for that object. Evaluate ''self size'' there.';
 				element: [ GtPlaygroundSlide new
 						snippets: {'''Hello world'''};
-						asElement ]).
+						asElement ];
+				elementWeight: 0.6).
 	show
 		addSlide:
 			(GtTextAndElementSlide new
@@ -115,18 +117,67 @@ SMAForGt class >> addCallGraphGettingStartedTo: show [
 					'Evaluate the snippet to obtain a view of the File object. (NB: First copy the file Calls.txt to the image directory.)';
 				newText:
 					'You can also evaluate ''self contents'' on the result to obtain the contents of the File as a String object.';
+				newText: 'We should encapsulate this data in a CallGraph object ...';
+				element: [ GtPlaygroundSlide new
+						snippets:
+							{'
+''Calls.txt'' asFileReference'};
+						asElement ];
+				elementWeight: 0.6).
+	show
+		addSlide:
+			(GtTextAndElementSlide new
+				newTextWithFormat: ('Navigating to implementors and sender' asRopedText fontSize: 36);
 				newText:
 					'How is asFileReference implemented? Just click on the little triangle to the right of the message.';
 				newText:
 					'Which classes implement this method? Select the message and type <CMD>-M (for iMplementors).';
 				newText: 'Also try <CMD>-N (for seNders).';
-				newText:
-					'There are many ways to navigate to a class browser. One easy way is to go to the Meta tab.';
 				element: [ GtPlaygroundSlide new
 						snippets:
 							{'
 ''Calls.txt'' asFileReference'};
-						asElement ])
+						asElement ];
+				elementWeight: 0.6).
+	show
+		addSlide:
+			(GtTextAndElementSlide new
+				newTextWithFormat: ('Navigating to classes' asRopedText fontSize: 36);
+				newText:
+					'There are many ways to navigate to a class browser. One easy way is to go to the Meta tab.';
+				newText: 'You can also ask an object for its class';
+				newText:
+					'Click on the "book" icon of the inspector to open a dedicated code browser.';
+				element: [ GtPlaygroundSlide new
+						snippets:
+							{'
+''Calls.txt'' asFileReference' . '
+(''Calls.txt'' asFileReference) class'};
+						asElement ];
+				elementWeight: 0.6)
+]
+
+{ #category : #accessing }
+SMAForGt class >> addCallGraphImplementingTo: show [ 
+
+	show
+		addSlide:
+			(GtTextAndElementSlide new
+							newTextWithFormat: ('Implementing the CallGraph class'asRopedText fontSize: 36);
+				element: [ GtPlaygroundSlide new
+						snippets:
+							{
+							
+							''
+							
+							};
+						asElement ];
+				elementWeight: 0.6).
+
+
+
+
+
 ]
 
 { #category : #accessing }
@@ -182,8 +233,9 @@ SMAForGt class >> callGraphSlideshow [
 
 	| show |
 	show := GtSlideShow new.
-	self addCallGraphTitleTo: show.
-	self addCallGraphGettingStartedTo: show.
+	"self addCallGraphTitleTo: show.
+	self addCallGraphGettingStartedTo: show."
+	self addCallGraphImplementingTo: show.
 	self addCallGraphCollectionsAPITo: show.
 	self addCallGraphExplorationTo: show.
 	show makeArrowsVisible.
