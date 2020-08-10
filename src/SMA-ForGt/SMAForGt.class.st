@@ -44,23 +44,22 @@ SMAForGt class >> addCallGraphCollectionsAPITo: show [
 			(GtTextAndElementSlide new
 				newTextWithFormat: (self heading: 'The Collection API');
 				newText: 'All collections provide acommon API, which should be mostly obvious';
-
 				element: [ GtPlaygroundSlide new
 						snippets:
 							{'#(1 2 3 4) includes: 5' . '#(1 2 3 4) size' . '#(1 2 3 4) isEmpty not'.
 							'#(1 2 3 4) contains: [:some | some < 0 ]'.
-							'#(1 2 3 4) asOrderedCollection'
-							};
+							'#(1 2 3 4) asOrderedCollection'};
 						asElement ];
 				elementWeight: 0.75).
-
 	show
 		addSlide:
 			(GtTextAndElementSlide new
-				newText: 'select: and reject: return subcollections that match the block (or not).';
-				newText: 'detect: returns the first matching value.';				
-				newText: 'collect: applies a transformation.';			
-				newText: 'inject:into: is a "fold" operation, suitable for computing sums or products.';
+				newText:
+					'select: and reject: return subcollections that match the block (or not).';
+				newText: 'detect: returns the first matching value.';
+				newText: 'collect: applies a transformation.';
+				newText:
+					'inject:into: is a "fold" operation, suitable for computing sums or products.';
 				element: [ GtPlaygroundSlide new
 						snippets:
 							{'#(1 2 3 4) select: [:each | each odd ]'.
@@ -74,13 +73,35 @@ into: [:sum :each | sum + each]'};
 	show
 		addSlide:
 			(GtTextAndElementSlide new
-					newTextWithFormat: (self heading: 'Blocks');
+				newTextWithFormat: (self heading: 'Blocks');
 				newText: 'Blocks are first-class, anonymous functions ("valuable" objects).';
-				newText: 'Note how Symbols like #factorial behave like 1-argument blocks by implementing the #value: method.';
+				newText:
+					'Note how Symbols like #factorial behave like 1-argument blocks by implementing the #value: method.';
 				element: [ GtPlaygroundSlide new
 						snippets:
 							{'5 factorial' . '[ :arg | arg factorial ] value: 5'.
 							'#factorial value: 5' . 'Symbol>>#value:' . '5 perform: #factorial'};
+						asElement ];
+				elementWeight: 0.75) . show
+		addSlide:
+			(GtTextAndElementSlide new
+				newTextWithFormat: (self heading: 'Booleans');
+				newText: 'A Boolean is simply an object that can choose between two alternatives.';
+				newText: 'true and false are just the unique instances of the classes True and False.';
+				element: [ GtPlaygroundSlide new
+						snippets:
+							{'(11 factorial + 1) isPrime
+  ifTrue: [ ''yes'' ]
+  ifFalse: [ ''no'' ]'.
+  'Boolean subclasses'.
+  'Boolean>>#ifTrue:ifFalse:'.
+ 'True>>#ifTrue:ifFalse:'.
+ 'False>>#ifTrue:ifFalse:'.
+  'Boolean>>#not'
+  
+  
+  
+  };
 						asElement ];
 				elementWeight: 0.75)
 ]
