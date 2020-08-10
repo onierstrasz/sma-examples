@@ -421,8 +421,8 @@ SMAForGt class >> openSlideshowInNewSpace: aSlideshow [
 ]
 
 { #category : #accessing }
-SMAForGt class >> openSlideshowsOverview [
-	"SMAForGt openSlideshowsOverview"
+SMAForGt class >> openSlideshowOverview [
+	"SMAForGt openSlideshowOverview"
 
 	| helper container |
 	helper := GtHomeSlideShowsSection new.
