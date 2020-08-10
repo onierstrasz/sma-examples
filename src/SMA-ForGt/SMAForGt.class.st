@@ -158,26 +158,42 @@ SMAForGt class >> addCallGraphGettingStartedTo: show [
 ]
 
 { #category : #accessing }
-SMAForGt class >> addCallGraphImplementingTo: show [ 
-
+SMAForGt class >> addCallGraphImplementingTo: show [
 	show
 		addSlide:
 			(GtTextAndElementSlide new
-							newTextWithFormat: ('Implementing the CallGraph class'asRopedText fontSize: 36);
+				newTextWithFormat: ('Implementing the CallGraph class' asRopedText fontSize: 36);
+				newText:
+					'You can create a new class programmatically by sending a message to its superclass.';
+				newText:
+					'You can also create a new class in the Playground by clicking on the "wrench" icon.';
 				element: [ GtPlaygroundSlide new
 						snippets:
-							{
-							
-							''
-							
-							};
+							{'Object subclass: #CallGraph
+  instanceVariableNames: ''''
+  classVariableNames: ''''
+  package: ''CallGraph'''.
+							'MyCallGraph new'};
 						asElement ];
 				elementWeight: 0.6).
-
-
-
-
-
+	show
+		addSlide:
+			(GtTextAndElementSlide new
+				newTextWithFormat: ('The Class Coder' asRopedText fontSize: 36);
+				newText: 'The class coder is a dedicated browser for editing classes.';
+				newText: 'Be sure to always write a class comment!';
+				element: [ (GtClassCoder forClass: CallGraph) asElement ];
+				elementWeight: 0.6).
+	show
+		addSlide:
+			(GtTextAndElementSlide new
+				newTextWithFormat: ('Defining methods' asRopedText fontSize: 36);
+				newText: '...';
+				element:
+						[ GtPlaygroundSlide new snippets: {'CallGraph >> #from:'} ;
+						asElement
+						];
+				elementWeight: 0.6)
 ]
 
 { #category : #accessing }
@@ -236,8 +252,8 @@ SMAForGt class >> callGraphSlideshow [
 	"self addCallGraphTitleTo: show.
 	self addCallGraphGettingStartedTo: show."
 	self addCallGraphImplementingTo: show.
-	self addCallGraphCollectionsAPITo: show.
-	self addCallGraphExplorationTo: show.
+	"self addCallGraphCollectionsAPITo: show."
+	"self addCallGraphExplorationTo: show."
 	show makeArrowsVisible.
 	^ show
 ]
@@ -266,7 +282,7 @@ SMAForGt class >> openSlideshowInNewSpace: aSlideshow [
 	BlSpace new
 		title: 'Space';
 		extent: 1200 @ 600;
-		addChild: aSlideshow create;
+		addChild: aSlideshow makeArrowsVisible create;
 		withHalos;
 		show
 ]
