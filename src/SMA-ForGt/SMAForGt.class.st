@@ -20,58 +20,47 @@ SMAForGt class >> addCallGraphCollectionsAPITo: show [
 	show
 		addSlide:
 			(GtTextAndElementSlide new
-				newTextWithFormat: ('Modeling Calls, Methods and Classes.' asRopedText fontSize: 36);
+				newTextWithFormat: (self heading: 'Modeling Calls, Methods and Classes.');
 				newText:
 					'We want to build up a Call object for each line of the log. To do this, we need some help from the Collection classes.';
-				newTextWithFormat:
-					('How to fix alignment?' asRopedText
-						foreground: Color red;
-						fontSize: 10);
+				newTextWithFormat: (self nb: 'How to fix alignment?');
 				element: [ ((GtMethodCoder forMethod: CallGraph >> #initializeFrom:)
 						expanded: true) asElement ];
 				elementWeight: 0.5).
 	show
 		addSlide:
 			(GtTextAndElementSlide new
-				newTextWithFormat: ('The Collection Hierarchy' asRopedText fontSize: 36);
+				newTextWithFormat: (self heading: 'The Collection Hierarchy');
 				newText:
 					'The most important collections classes to remember are OrderedCollection, Array, String, Symbol and Dictionary';
 				newTextWithFormat:
-					('When the mondrian is embedded this way I cannot click on the classes and navigate to the Code. How can I embed this in sliding panes, without using a snippet?' asRopedText
-						foreground: Color red;
-						fontSize: 10);
+					(self
+						nb:
+							'When the mondrian is embedded this way I cannot click on the classes and navigate to the Code. How can I embed this in sliding panes, without using a snippet?');
 				element: [ self new collectionHierarchy asElement ];
 				elementWeight: 0.75).
 	show
 		addSlide:
 			(GtTextAndElementSlide new
-				newTextWithFormat: ('The Collection API' asRopedText fontSize: 36);
-				newText: '...';
-				newTextWithFormat:
-					('Still working on this ...' asRopedText
-						foreground: Color red;
-						fontSize: 10);
+				newTextWithFormat: (self heading: 'The Collection API');
+				newText: 'All collections provide acommon API, which should be mostly obvious';
+
 				element: [ GtPlaygroundSlide new
 						snippets:
-							{'#(1 2 3 4) includes: 5' . '#(1 2 3 4) size' . '#(1 2 3 4) isEmpty'.
-							'#(1 2 3 4) contains: [:some | some < 0 ]'};
+							{'#(1 2 3 4) includes: 5' . '#(1 2 3 4) size' . '#(1 2 3 4) isEmpty not'.
+							'#(1 2 3 4) contains: [:some | some < 0 ]'.
+							'#(1 2 3 4) asOrderedCollection'
+							};
 						asElement ];
-				elementWeight: 0.6).
+				elementWeight: 0.75).
+
 	show
 		addSlide:
 			(GtTextAndElementSlide new
-				newTextWithFormat: ('The Transcript.' asRopedText fontSize: 36);
-				newText: 'The Transcript is a kind of system log';
-				element: [ GtPlaygroundSlide new
-						snippets:
-							{'Transcript open' . '#(1 2 3 4) do:
-[:each | Transcript show: each ]' . '#(1 2 3 4) with: #(5 6 7 8)
-do: [:x : y | Transcript show: x+y; cr]'};
-						asElement ]).
-	show
-		addSlide:
-			(GtTextAndElementSlide new
-				newText: 'More collections API';
+				newText: 'select: and reject: return subcollections that match the block (or not).';
+				newText: 'detect: returns the first matching value.';				
+				newText: 'collect: applies a transformation.';			
+				newText: 'inject:into: is a "fold" operation, suitable for computing sums or products.';
 				element: [ GtPlaygroundSlide new
 						snippets:
 							{'#(1 2 3 4) select: [:each | each odd ]'.
@@ -81,17 +70,19 @@ do: [:x : y | Transcript show: x+y; cr]'};
 							'#(1 2 3 4) inject: 0
 into: [:sum :each | sum + each]'};
 						asElement ];
-				elementWeight: 0.8).
+				elementWeight: 0.75).
 	show
 		addSlide:
 			(GtTextAndElementSlide new
-				newText: 'Blocks are first-class, anonymous functions';
-				newText: 'Duck Typing Symbols for Blocks';
+					newTextWithFormat: (self heading: 'Blocks');
+				newText: 'Blocks are first-class, anonymous functions ("valuable" objects).';
+				newText: 'Note how Symbols like #factorial behave like 1-argument blocks by implementing the #value: method.';
 				element: [ GtPlaygroundSlide new
 						snippets:
 							{'5 factorial' . '[ :arg | arg factorial ] value: 5'.
 							'#factorial value: 5' . 'Symbol>>#value:' . '5 perform: #factorial'};
-						asElement ])
+						asElement ];
+				elementWeight: 0.75)
 ]
 
 { #category : #accessing }
@@ -100,7 +91,8 @@ SMAForGt class >> addCallGraphExplorationTo: show [
 	show
 		addSlide:
 			(GtTextAndElementSlide new
-				newText: 'Exploring the Call Graph';
+				newTextWithFormat: (self heading:'Exploring the Call Graph');
+				newTextWithFormat: (self nb: 'still working here ...');
 				element: [ GtPlaygroundSlide new
 						snippets:
 							{'CallGraph fromFile: ''Calls.txt''' . '((CallGraph fromFile: ''Calls.txt'') methods
@@ -115,11 +107,11 @@ SMAForGt class >> addCallGraphGettingStartedTo: show [
 	show
 		addSlide:
 			(GtTextAndElementSlide new
-				newTextWithFormat: ('Getting started.' asRopedText fontSize: 36);
+				newTextWithFormat: (self heading: 'Getting started.');
 				newText: 'You can download Gt from https://gtoolkit.com/download/';
 				newText:
 					'Evaluate the two snippets to load this project from github, and instantiate this slideshow';
-								newTextWithFormat: ('How can I format the URL to be a live link?.' asRopedText foreground: Color red; fontSize: 12);
+				newTextWithFormat: (self nb: 'How can I format the URL to be a live link?');
 				element: [ GtPlaygroundSlide new
 						snippets:
 							{'Metacello new baseline: ''SMAForGt''; repository: ''github://onierstrasz/sma-examples/src''; load.'.
@@ -129,7 +121,7 @@ SMAForGt class >> addCallGraphGettingStartedTo: show [
 	show
 		addSlide:
 			(GtTextAndElementSlide new
-				newTextWithFormat: ('The Playground.' asRopedText fontSize: 36);
+				newTextWithFormat: (self heading: 'The Playground.');
 				newText:
 					'The Playground is a place to evaluate arbitrary Smalltalk expressions.';
 				newText:
@@ -144,7 +136,7 @@ SMAForGt class >> addCallGraphGettingStartedTo: show [
 	show
 		addSlide:
 			(GtTextAndElementSlide new
-				newTextWithFormat: ('Opening a file' asRopedText fontSize: 36);
+				newTextWithFormat: (self heading: 'Opening a file');
 				newText:
 					'Evaluate the snippet to obtain a view of the File object. (NB: First copy the file Calls.txt to the image directory.)';
 				newText:
@@ -159,7 +151,7 @@ SMAForGt class >> addCallGraphGettingStartedTo: show [
 	show
 		addSlide:
 			(GtTextAndElementSlide new
-				newTextWithFormat: ('Navigating to implementors and sender' asRopedText fontSize: 36);
+				newTextWithFormat: (self heading: 'Navigating to implementors and sender' );
 				newText:
 					'How is asFileReference implemented? Just click on the little triangle to the right of the message.';
 				newText:
@@ -174,7 +166,7 @@ SMAForGt class >> addCallGraphGettingStartedTo: show [
 	show
 		addSlide:
 			(GtTextAndElementSlide new
-				newTextWithFormat: ('Navigating to classes' asRopedText fontSize: 36);
+				newTextWithFormat: (self heading: 'Navigating to classes' );
 				newText:
 					'There are many ways to navigate to a class browser. One easy way is to go to the Meta tab.';
 				newText: 'You can also ask an object for its class';
@@ -346,7 +338,7 @@ SMAForGt class >> callGraphSlideshow [
 	self addCallGraphGettingStartedTo: show.
 	self addCallGraphImplementingTo: show.
 	self addCallGraphCollectionsAPITo: show.
-	"self addCallGraphExplorationTo: show."
+	self addCallGraphExplorationTo: show.
 	show makeArrowsVisible.
 	^ show
 ]
@@ -373,6 +365,11 @@ SMAForGt class >> classHierarchyFor: classes [
 		connectFrom: #superclass.
 	view layout tree levelDistance: 20.
 	^ view
+]
+
+{ #category : #accessing }
+SMAForGt class >> heading: aString [
+	^ aString asRopedText fontSize: 36
 ]
 
 { #category : #accessing }
@@ -408,6 +405,13 @@ SMAForGt class >> methodCodersElementFor: aMethodCollection [
 			container
 				addChild: ((GtMethodCoder forMethod: method) expanded: true) asElement ].
 	^ container
+]
+
+{ #category : #accessing }
+SMAForGt class >> nb: aString [
+	^ aString asRopedText
+		foreground: Color red;
+		fontSize: 12
 ]
 
 { #category : #accessing }
