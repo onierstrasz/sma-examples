@@ -20,16 +20,47 @@ SMAForGt class >> addCallGraphCollectionsAPITo: show [
 	show
 		addSlide:
 			(GtTextAndElementSlide new
-				newText: 'Collections API';
+				newTextWithFormat: ('Modeling Calls, Methods and Classes.' asRopedText fontSize: 36);
+				newText:
+					'We want to build up a Call object for each line of the log. To do this, we need some help from the Collection classes.';
+				newTextWithFormat:
+					('How to fix alignment?' asRopedText
+						foreground: Color red;
+						fontSize: 10);
+				element: [ ((GtMethodCoder forMethod: CallGraph >> #initializeFrom:)
+						expanded: true) asElement ];
+				elementWeight: 0.5).
+	show
+		addSlide:
+			(GtTextAndElementSlide new
+				newTextWithFormat: ('The Collection Hierarchy' asRopedText fontSize: 36);
+				newText:
+					'The most important collections classes to remember are OrderedCollection, Array, String, Symbol and Dictionary';
+				newTextWithFormat:
+					('When the mondrian is embedded this way I cannot click on the classes and navigate to the Code. How can I embed this in sliding panes, without using a snippet?' asRopedText
+						foreground: Color red;
+						fontSize: 10);
+				element: [ self new collectionHierarchy asElement ];
+				elementWeight: 0.75).
+	show
+		addSlide:
+			(GtTextAndElementSlide new
+				newTextWithFormat: ('The Collection API' asRopedText fontSize: 36);
+				newText: '...';
+				newTextWithFormat:
+					('Still working on this ...' asRopedText
+						foreground: Color red;
+						fontSize: 10);
 				element: [ GtPlaygroundSlide new
 						snippets:
 							{'#(1 2 3 4) includes: 5' . '#(1 2 3 4) size' . '#(1 2 3 4) isEmpty'.
 							'#(1 2 3 4) contains: [:some | some < 0 ]'};
 						asElement ];
-				elementWeight: 0.8).
+				elementWeight: 0.6).
 	show
 		addSlide:
 			(GtTextAndElementSlide new
+				newTextWithFormat: ('The Transcript.' asRopedText fontSize: 36);
 				newText: 'The Transcript is a kind of system log';
 				element: [ GtPlaygroundSlide new
 						snippets:
@@ -88,6 +119,7 @@ SMAForGt class >> addCallGraphGettingStartedTo: show [
 				newText: 'You can download Gt from https://gtoolkit.com/download/';
 				newText:
 					'Evaluate the two snippets to load this project from github, and instantiate this slideshow';
+								newTextWithFormat: ('How can I format the URL to be a live link?.' asRopedText foreground: Color red; fontSize: 12);
 				element: [ GtPlaygroundSlide new
 						snippets:
 							{'Metacello new baseline: ''SMAForGt''; repository: ''github://onierstrasz/sma-examples/src''; load.'.
@@ -167,6 +199,10 @@ SMAForGt class >> addCallGraphImplementingTo: show [
 					'You can create a new class programmatically by sending a message to its superclass.';
 				newText:
 					'You can also create a new class in the Playground by clicking on the "wrench" icon.';
+				newTextWithFormat:
+					('Is it easy to point to the icon?.' asRopedText
+						foreground: Color red;
+						fontSize: 10);
 				element: [ GtPlaygroundSlide new
 						snippets:
 							{'Object subclass: #CallGraph
@@ -182,6 +218,11 @@ SMAForGt class >> addCallGraphImplementingTo: show [
 				newTextWithFormat: ('The Class Coder' asRopedText fontSize: 36);
 				newText: 'The class coder is a dedicated browser for editing classes.';
 				newText: 'Be sure to always write a class comment!';
+				newTextWithFormat:
+					('Can I get a full Coder with the missing icons and buttons?'
+						asRopedText
+						foreground: Color red;
+						fontSize: 10);
 				element: [ (GtClassCoder forClass: CallGraph) asElement ];
 				elementWeight: 0.6).
 	show
@@ -192,6 +233,10 @@ SMAForGt class >> addCallGraphImplementingTo: show [
 					'The "from:" method will split the input "aString" into lines (by the character "carriage return"), and assign it  to the "calls" instance variable.';
 				newText:
 					'The "calls" method is an accessor, returning the value of the calls variable.';
+				newTextWithFormat:
+					('How can I align the element to the center?' asRopedText
+						foreground: Color red;
+						fontSize: 10);
 				element: [ self
 						methodCodersElementFor:
 							{(CallGraph >> #from:).
@@ -219,20 +264,28 @@ cg calls size'};
 					'Factory methods and other "static" methods are defined on the "class side".';
 				newText:
 					'Browse the "fromFileNamed:" method to see it is a "class" method, not an "instance" method. ';
+				newTextWithFormat:
+					('How can I open the coder with the fromFileNamed: method in focus and expanded?'
+						asRopedText
+						foreground: Color red;
+						fontSize: 10);
 				element: [ (GtClassCoder forClass: CallGraph) asElement ];
 				elementWeight: 0.6).
 	show
 		addSlide:
 			(GtTextAndElementSlide new
 				newTextWithFormat: ('Defining tests' asRopedText fontSize: 36);
-				newText: 'Tests in GT consist of methods containing assertions and returning an example object.';
+				newText:
+					'Tests in GT consist of methods containing assertions and returning an example object.';
 				newText: 'Example objects can be composed.';
-				newText: 'The <gtExample> pragma allows example methods to be run from the browser.';
+				newText:
+					'The <gtExample> pragma allows example methods to be run from the browser.';
+				newTextWithFormat:
+					('Is there a way to have the snippet already evaluated?' asRopedText
+						foreground: Color red;
+						fontSize: 10);
 				element: [ (GtPlaygroundSlide new
-						snippets: {'CallGraphExamples>>#fiveLineExample'})
-						
-						
-						 asElement ];
+						snippets: {'CallGraphExamples>>#fiveLineExample'}) asElement ];
 				elementWeight: 0.6)
 ]
 
@@ -289,13 +342,37 @@ SMAForGt class >> callGraphSlideshow [
 
 	| show |
 	show := GtSlideShow new.
-	"self addCallGraphTitleTo: show.
-	self addCallGraphGettingStartedTo: show."
+	self addCallGraphTitleTo: show.
+	self addCallGraphGettingStartedTo: show.
 	self addCallGraphImplementingTo: show.
-	"self addCallGraphCollectionsAPITo: show."
+	self addCallGraphCollectionsAPITo: show.
 	"self addCallGraphExplorationTo: show."
 	show makeArrowsVisible.
 	^ show
+]
+
+{ #category : #accessing }
+SMAForGt class >> classHierarchyFor: classes [
+	| view |
+	view := GtMondrian new.
+	view nodes
+		shape: [ :node | 
+			BlTextElement new
+				border: (BlBorder paint: Color black);
+				text: node name asRopedText;
+				padding:
+					(BlInsets
+						top: 5
+						right: 5
+						bottom: 5
+						left: 5) ];
+		with: classes.
+	view edges
+		fromCenterBottom;
+		toCenterTop;
+		connectFrom: #superclass.
+	view layout tree levelDistance: 20.
+	^ view
 ]
 
 { #category : #accessing }
@@ -502,4 +579,30 @@ logger invocationCount.
 		do:
 			[ :source | aPage addSnippet: (GtCoderSnippet new sourceCode: source) ].
 	^ aPage
+]
+
+{ #category : #accessing }
+SMAForGt >> collectionHierarchy [
+	<gtExample>
+	^ self class
+		classHierarchyFor:
+			{Object.
+			Collection.
+			SequenceableCollection.
+			ArrayedCollection.
+			Array.
+			String.
+			ByteString.
+			Symbol.
+			Text.
+			OrderedCollection.
+			SortedCollection.
+			LinkedList.
+			Interval.
+			Heap.
+			HashedCollection.
+			Set.
+			Dictionary.
+			IdentityDictionary.
+			Bag}
 ]
