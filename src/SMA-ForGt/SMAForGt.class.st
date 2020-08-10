@@ -188,11 +188,51 @@ SMAForGt class >> addCallGraphImplementingTo: show [
 		addSlide:
 			(GtTextAndElementSlide new
 				newTextWithFormat: ('Defining methods' asRopedText fontSize: 36);
-				newText: '...';
-				element:
-						[ GtPlaygroundSlide new snippets: {'CallGraph >> #from:'} ;
-						asElement
-						];
+				newText:
+					'The "from:" method will split the input "aString" into lines (by the character "carriage return"), and assign it  to the "calls" instance variable.';
+				newText:
+					'The "calls" method is an accessor, returning the value of the calls variable.';
+				element: [ self
+						methodCodersElementFor:
+							{(CallGraph >> #from:).
+							(CallGraph >> #calls)} ];
+				elementWeight: 0.6).
+	show
+		addSlide:
+			(GtTextAndElementSlide new
+				newTextWithFormat:
+					('How many calls are there in the call graph?' asRopedText
+						fontSize: 36);
+				newText: 'We just need to inspect the calls variable.';
+				element: [ GtPlaygroundSlide new
+						snippets:
+							{'| cg |
+cg := CallGraph new from: ''Calls.txt'' asFileReference contents.
+cg calls size'};
+						asElement ];
+				elementWeight: 0.6).
+	show
+		addSlide:
+			(GtTextAndElementSlide new
+				newTextWithFormat: ('Improving the interface' asRopedText fontSize: 36);
+				newText:
+					'Factory methods and other "static" methods are defined on the "class side".';
+				newText:
+					'Browse the "fromFileNamed:" method to see it is a "class" method, not an "instance" method. ';
+				element: [ (GtClassCoder forClass: CallGraph) asElement ];
+				elementWeight: 0.6).
+	show
+		addSlide:
+			(GtTextAndElementSlide new
+				newTextWithFormat: ('Defining tests' asRopedText fontSize: 36);
+				newText: 'Tests in GT consist of methods containing assertions and returning an example object.';
+				newText: 'Example objects can be composed.';
+				newText: 'The <gtExample> pragma allows example methods to be run from the browser.';
+				element: [ (GtPlaygroundSlide new
+						snippets: {'CallGraphExamples>>#fiveLineExample'})
+						
+						
+						 asElement ];
 				elementWeight: 0.6)
 ]
 
@@ -275,6 +315,22 @@ SnakesAndLadders example'.
 		do:
 			[ :source | aPage addSnippet: (GtCoderSnippet new sourceCode: source) ].
 	^ aPage
+]
+
+{ #category : #accessing }
+SMAForGt class >> methodCodersElementFor: aMethodCollection [
+"Create an element containing multiple method coders"
+	| container |
+	container := BlElement new
+		layout: BlLinearLayout vertical;
+		constraintsDo: [ :c | 
+			c horizontal matchParent.
+			c vertical fitContent ].
+	aMethodCollection
+		do: [ :method | 
+			container
+				addChild: ((GtMethodCoder forMethod: method) expanded: true) asElement ].
+	^ container
 ]
 
 { #category : #accessing }
