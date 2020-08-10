@@ -1,11 +1,141 @@
 "
-I offer Playground snippet creator just for Gt, not plain Pharo.
+I offer demo slideshows for Gt instead of Playground snippets for Pharo.
+
+Run this to open the overview:
+
+[[[
+SMAForGt openSlideshowsOverview
+]]]
+
+
 "
 Class {
 	#name : #SMAForGt,
 	#superclass : #Object,
 	#category : #'SMA-ForGt'
 }
+
+{ #category : #accessing }
+SMAForGt class >> addCallGraphCollectionsAPITo: show [
+	show
+		addSlide:
+			(GtTextAndElementSlide new
+				newText: 'Collections API';
+				element: [ GtPlaygroundSlide new
+						snippets:
+							{'#(1 2 3 4) includes: 5' . '#(1 2 3 4) size' . '#(1 2 3 4) isEmpty'.
+							'#(1 2 3 4) contains: [:some | some < 0 ]'};
+						asElement ];
+				elementWeight: 0.8).
+	show
+		addSlide:
+			(GtTextAndElementSlide new
+				newText: 'The Transcript is a kind of system log';
+				element: [ GtPlaygroundSlide new
+						snippets:
+							{'Transcript open' . '#(1 2 3 4) do:
+[:each | Transcript show: each ]' . '#(1 2 3 4) with: #(5 6 7 8)
+do: [:x : y | Transcript show: x+y; cr]'};
+						asElement ]).
+	show
+		addSlide:
+			(GtTextAndElementSlide new
+				newText: 'More collections API';
+				element: [ GtPlaygroundSlide new
+						snippets:
+							{'#(1 2 3 4) select: [:each | each odd ]'.
+							'#(1 2 3 4) reject: [:each | each odd ]'.
+							'#(1 2 3 4) detect: [:each | each odd ]'.
+							'#(1 2 3 4) collect: [:each | each even ]'.
+							'#(1 2 3 4) inject: 0
+into: [:sum :each | sum + each]'};
+						asElement ];
+				elementWeight: 0.8).
+	show
+		addSlide:
+			(GtTextAndElementSlide new
+				newText: 'Blocks are first-class, anonymous functions';
+				newText: 'Duck Typing Symbols for Blocks';
+				element: [ GtPlaygroundSlide new
+						snippets:
+							{'5 factorial' . '[ :arg | arg factorial ] value: 5'.
+							'#factorial value: 5' . 'Symbol>>#value:' . '5 perform: #factorial'};
+						asElement ])
+]
+
+{ #category : #accessing }
+SMAForGt class >> addCallGraphExplorationTo: show [ 
+
+	show
+		addSlide:
+			(GtTextAndElementSlide new
+				newText: 'Exploring the Call Graph';
+				element: [ GtPlaygroundSlide new
+						snippets:
+							{'CallGraph fromFile: ''Calls.txt''' . '((CallGraph fromFile: ''Calls.txt'') methods
+select: [ :m | m calls size > 1 ]) size'.
+							'((CallGraph fromFile: ''Calls.txt'') methods select: #isPolymorphic)
+collect: [ :each | each -> (each calls collect: #args) asSet ]'};
+						asElement ]).
+]
+
+{ #category : #accessing }
+SMAForGt class >> addCallGraphGettingStartedTo: show [
+	show
+		addSlide:
+			(GtTextAndElementSlide new
+				newTextWithFormat: ('Getting started.' asRopedText fontSize: 36);
+				newText: 'You can download Gt from https://gtoolkit.com/download/';
+				newText:
+					'Evaluate the two snippets to load this project from github, and instantiate this slideshow';
+				element: [ GtPlaygroundSlide new
+						snippets:
+							{'Metacello new baseline: ''SMAForGt''; repository: ''github://onierstrasz/sma-examples/src''; load.'.
+							'SMAForGt openSlideshowsOverview'};
+						asElement ]).
+	show
+		addSlide:
+			(GtTextAndElementSlide new
+				newTextWithFormat: ('The Playground.' asRopedText fontSize: 36);
+				newText:
+					'The Playground is a place to evaluate arbitrary Smalltalk expressions.';
+				newText:
+					'Right-click next to the expression to see what you can do. Also see the tooltip descriptions of the various buttons.';
+				newText: 'Inspecting an expression opens an Inspector on the result.';
+				newText:
+					'Lifting up the gray bar at the bottom of the Inpsctor reveals a new evaluation pane for that object. Evaluate ''self size'' there.';
+				element: [ GtPlaygroundSlide new
+						snippets: {'''Hello world'''};
+						asElement ]).
+	show
+		addSlide:
+			(GtTextAndElementSlide new
+				newTextWithFormat: ('Opening a file' asRopedText fontSize: 36);
+				newText:
+					'Evaluate the snippet to obtain a view of the File object. (NB: First copy the file Calls.txt to the image directory.)';
+				newText:
+					'You can also evaluate ''self contents'' on the result to obtain the contents of the File as a String object.';
+				newText:
+					'How is asFileReference implemented? Just click on the little triangle to the right of the message.';
+				newText:
+					'Which classes implement this method? Select the message and type <CMD>-M (for iMplementors).';
+				newText: 'Also try <CMD>-N (for seNders).';
+				newText:
+					'There are many ways to navigate to a class browser. One easy way is to go to the Meta tab.';
+				element: [ GtPlaygroundSlide new
+						snippets:
+							{'
+''Calls.txt'' asFileReference'};
+						asElement ])
+]
+
+{ #category : #accessing }
+SMAForGt class >> addCallGraphTitleTo: show [
+	show
+		addSlide:
+			(GtTitleSlide new
+				titleText: ('CallGraph Demo' asRopedText fontSize: 70))
+]
 
 { #category : #scripts }
 SMAForGt class >> callGraphPlaygroundPage [
@@ -52,111 +182,10 @@ SMAForGt class >> callGraphSlideshow [
 
 	| show |
 	show := GtSlideShow new.
-	show
-		addSlide:
-			(GtTitleSlide new
-				titleText: ('CallGraph Demo' asRopedText fontSize: 70)).
-	show
-		addSlide:
-			(GtTextAndElementSlide new
-				newTextWithFormat: ('Getting started.' asRopedText fontSize: 36);
-				newText: 'You can download Gt from https://gtoolkit.com/download/';
-				newText:
-					'Evaluate the two snippets to load this project from github, and instantiate this slideshow';
-				element: [ GtPlaygroundSlide new
-						snippets:
-							{'Metacello new baseline: ''SMAForGt''; repository: ''github://onierstrasz/sma-examples/src''; load.'.
-							'SMAForGt openSlideshowsOverview'};
-						asElement ]).
-	show
-		addSlide:
-			(GtTextAndElementSlide new
-				newTextWithFormat: ('The Playground.' asRopedText fontSize: 36);
-				newText:
-					'The Playground is a place to evaluate arbitrary Smalltalk expressions.';
-				newText:
-					'Right-click next to the expression to see what you can do. Also see the tooltip descriptions of the various buttons.';
-				newText: 'Inspecting an expression opens an Inspector on the result.';
-				newText:
-					'Lifting up the gray bar at the bottom of the Inpsctor reveals a new evaluation pane for that object. Evaluate ''self size'' there.';
-				element: [ GtPlaygroundSlide new
-						snippets: {'''Hello world'''};
-						asElement ]).
-	show
-		addSlide:
-			(GtTextAndElementSlide new
-				newTextWithFormat: ('Opening a file' asRopedText fontSize: 36);
-				newText:
-					'Evaluate the snippet to obtain a view of the File object. (NB: First copy the file Calls.txt to the image directory.)';
-				newText:
-					'You can also evaluate ''self contents'' on the result to obtain the contents of the File as a String object.';
-				newText:
-					'How is asFileReference implemented? Just click on the little triangle to the right of the message.';
-				newText:
-					'Which classes implement this method? Select the message and type <CMD>-M (for iMplementors).';
-				newText: 'Also try <CMD>-N (for seNders).';
-				newText:
-					'There are many ways to navigate to a class browser. One easy way is to go to the Meta tab.';
-				element: [ GtPlaygroundSlide new
-						snippets: {'
-''Calls.txt'' asFileReference'};
-						asElement ]).
-	show
-		addSlide:
-			(GtTextAndElementSlide new
-				newText: 'Collections API';
-				element: [ GtPlaygroundSlide new
-						snippets:
-							{'#(1 2 3 4) includes: 5' . '#(1 2 3 4) size' . '#(1 2 3 4) isEmpty'.
-							'#(1 2 3 4) contains: [:some | some < 0 ]'};
-						asElement ];
-				elementWeight: 0.8).
-	show
-		addSlide:
-			(GtTextAndElementSlide new
-				newText: 'The Transcript is a kind of system log';
-				element: [ GtPlaygroundSlide new
-						snippets:
-							{'Transcript open' . '#(1 2 3 4) do:
-[:each | Transcript show: each ]'.
-							'#(1 2 3 4) with: #(5 6 7 8)
-do: [:x : y | Transcript show: x+y; cr]'};
-						asElement ]).
-	show
-		addSlide:
-			(GtTextAndElementSlide new
-				newText: 'More collections API';
-				element: [ GtPlaygroundSlide new
-						snippets:
-							{'#(1 2 3 4) select: [:each | each odd ]'.
-							'#(1 2 3 4) reject: [:each | each odd ]'.
-							'#(1 2 3 4) detect: [:each | each odd ]'.
-							'#(1 2 3 4) collect: [:each | each even ]'.
-							'#(1 2 3 4) inject: 0
-into: [:sum :each | sum + each]'};
-						asElement ];
-				elementWeight: 0.8).
-	show
-		addSlide:
-			(GtTextAndElementSlide new
-				newText: 'Blocks are first-class, anonymous functions';
-				newText: 'Duck Typing Symbols for Blocks';
-				element: [ GtPlaygroundSlide new
-						snippets:
-							{'5 factorial' . '[ :arg | arg factorial ] value: 5'.
-							'#factorial value: 5' . 'Symbol>>#value:' . '5 perform: #factorial'};
-						asElement ]).
-	show
-		addSlide:
-			(GtTextAndElementSlide new
-				newText: 'Exploring the Call Graph';
-				element: [ GtPlaygroundSlide new
-						snippets:
-							{'CallGraph fromFile: ''Calls.txt''' . '((CallGraph fromFile: ''Calls.txt'') methods
-select: [ :m | m calls size > 1 ]) size'.
-							'((CallGraph fromFile: ''Calls.txt'') methods select: #isPolymorphic)
-collect: [ :each | each -> (each calls collect: #args) asSet ]'};
-						asElement ]).
+	self addCallGraphTitleTo: show.
+	self addCallGraphGettingStartedTo: show.
+	self addCallGraphCollectionsAPITo: show.
+	self addCallGraphExplorationTo: show.
 	show makeArrowsVisible.
 	^ show
 ]
