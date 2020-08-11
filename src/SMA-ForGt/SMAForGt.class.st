@@ -84,6 +84,13 @@ SMAForGt class >> openSlideshowOverview [
 		addChild:
 			(helper
 				newShowCardWithTitle: 'Callgraph Demo'
+				slideshow: [ GtPharo101 new create ]
+				description:
+					'The basics of Pharo and Gt.').
+	container
+		addChild:
+			(helper
+				newShowCardWithTitle: 'Callgraph Demo'
 				slideshow: [ CallGraphSlideShow new create ]
 				description:
 					'A quick introduction to Smalltalk and GT using a running example of call graph analysis.').

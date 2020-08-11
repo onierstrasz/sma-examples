@@ -60,7 +60,7 @@ SMASlideshowStencil >> nb: aString [
 ]
 
 { #category : #accessing }
-SMASlideshowStencil >> openInNewSpace [
+SMASlideshowStencil >> openInSpace [
 	self openSlideshowInNewSpace: (self create)
 ]
 
