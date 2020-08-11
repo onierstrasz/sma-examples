@@ -24,7 +24,7 @@ CallGraph class >> example [
 { #category : #'instance creation' }
 CallGraph class >> fromFile: filePath [
 
-	^ self new initializeFrom:
+	^ self new from:
 		  (FileLocator imageDirectory asFileReference / filePath) contents
 ]
 
@@ -65,7 +65,9 @@ CallGraph >> createCall: callString [
 
 { #category : #initialization }
 CallGraph >> from: aString [
-	calls := Character cr split: aString
+
+	calls := ((Character cr split: aString) select: #notEmpty) collect: [ 
+		         :each | self createCall: each ]
 ]
 
 { #category : #accessing }
@@ -93,13 +95,6 @@ CallGraph >> getMethod: signature [
 CallGraph >> initialize [
 	methods := Dictionary new.
 	classes := Dictionary new
-]
-
-{ #category : #accessing }
-CallGraph >> initializeFrom: aString [
-			calls := ((Character cr split: aString)
-				select: #notEmpty)
-				collect: [ :each | self createCall: each ]
 ]
 
 { #category : #accessing }
