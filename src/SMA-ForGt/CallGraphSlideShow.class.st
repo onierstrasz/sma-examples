@@ -24,8 +24,12 @@ CallGraphSlideShow >> addCallGraphCollectionsAPITo: show [
 				newText:
 					'We want to build up a Call object for each line of the log. To do this, we need some help from the Collection classes.';
 				newTextWithFormat: (self nb: 'How to fix alignment?');
-				element: [ ((GtMethodCoder forMethod: CallGraph >> #initializeFrom:)
-						expanded: true) asElement ];
+				newTextWithFormat: (self nb: 'FIX CODE ELEMENT');
+				element: [ GtPlaygroundSlide new
+						snippets: {'CallGraph >> #initializeFrom:'};
+						"((GtMethodCoder forMethod: CallGraph >> #initializeFrom:)
+						expanded: true) asElement"
+							asElement ];
 				elementWeight: 0.5).
 	show
 		addSlide:
@@ -82,26 +86,22 @@ into: [:sum :each | sum + each]'};
 							{'5 factorial' . '[ :arg | arg factorial ] value: 5'.
 							'#factorial value: 5' . 'Symbol>>#value:' . '5 perform: #factorial'};
 						asElement ];
-				elementWeight: 0.75) . show
+				elementWeight: 0.75).
+	show
 		addSlide:
 			(GtTextAndElementSlide new
 				newTextWithFormat: (self heading: 'Booleans');
-				newText: 'A Boolean is simply an object that can choose between two alternatives.';
-				newText: 'true and false are just the unique instances of the classes True and False.';
+				newText:
+					'A Boolean is simply an object that can choose between two alternatives.';
+				newText:
+					'true and false are just the unique instances of the classes True and False.';
 				element: [ GtPlaygroundSlide new
 						snippets:
 							{'(11 factorial + 1) isPrime
   ifTrue: [ ''yes'' ]
-  ifFalse: [ ''no'' ]'.
-  'Boolean subclasses'.
-  'Boolean>>#ifTrue:ifFalse:'.
- 'True>>#ifTrue:ifFalse:'.
- 'False>>#ifTrue:ifFalse:'.
-  'Boolean>>#not'
-  
-  
-  
-  };
+  ifFalse: [ ''no'' ]' . 'Boolean subclasses' . 'Boolean>>#ifTrue:ifFalse:'.
+							'True>>#ifTrue:ifFalse:' . 'False>>#ifTrue:ifFalse:'.
+							'Boolean>>#not'};
 						asElement ];
 				elementWeight: 0.75)
 ]
@@ -221,8 +221,7 @@ CallGraphSlideShow >> addCallGraphImplementingTo: show [
 							{'Object subclass: #CallGraph
   instanceVariableNames: ''''
   classVariableNames: ''''
-  package: ''CallGraph'''.
-							'MyCallGraph new'};
+  package: ''CallGraph''' . 'MyCallGraph new'};
 						asElement ];
 				elementWeight: 0.6).
 	show
@@ -232,11 +231,12 @@ CallGraphSlideShow >> addCallGraphImplementingTo: show [
 				newText: 'The class coder is a dedicated browser for editing classes.';
 				newText: 'Be sure to always write a class comment!';
 				newTextWithFormat:
-					('Can I get a full Coder with the missing icons and buttons?'
-						asRopedText
-						foreground: Color red;
-						fontSize: 10);
-				element: [ (GtClassCoder forClass: CallGraph) asElement ];
+					(self nb: 'Can I get a full Coder with the missing icons and buttons?');
+				newTextWithFormat: (self nb: 'FIX CODE ELEMENT');
+				element: [ "(GtClassCoder forClass: CallGraph) asElement"
+					GtPlaygroundSlide new
+						snippets: {'CallGraph'};
+						asElement ];
 				elementWeight: 0.6).
 	show
 		addSlide:
@@ -246,14 +246,22 @@ CallGraphSlideShow >> addCallGraphImplementingTo: show [
 					'The "from:" method will split the input "aString" into lines (by the character "carriage return"), and assign it  to the "calls" instance variable.';
 				newText:
 					'The "calls" method is an accessor, returning the value of the calls variable.';
-				newTextWithFormat:
-					('How can I align the element to the center?' asRopedText
-						foreground: Color red;
-						fontSize: 10);
-				element: [ self
+				
+						
+						newTextWithFormat: (self nb: 'How can I align the element to the center?' );
+						newTextWithFormat: (self nb: 'FIX CODE ELEMENT');
+						
+				element: [ 
+				
+				GtPlaygroundSlide new snippets: {'CallGraph >> #from:'.
+				'CallGraph >> #calls'}; asElement
+				
+				"self
 						methodCodersElementFor:
 							{(CallGraph >> #from:).
-							(CallGraph >> #calls)} ];
+							(CallGraph >> #calls)} "
+							
+							];
 				elementWeight: 0.6).
 	show
 		addSlide:
@@ -277,12 +285,16 @@ cg calls size'};
 					'Factory methods and other "static" methods are defined on the "class side".';
 				newText:
 					'Browse the "fromFileNamed:" method to see it is a "class" method, not an "instance" method. ';
-				newTextWithFormat:
-					('How can I open the coder with the fromFileNamed: method in focus and expanded?'
-						asRopedText
-						foreground: Color red;
-						fontSize: 10);
-				element: [ (GtClassCoder forClass: CallGraph) asElement ];
+				
+						newTextWithFormat: (self nb: 'How can I open the coder with the fromFileNamed: method in focus and expanded?');
+						newTextWithFormat: (self nb: 'FIX CODE ELEMENT');
+				element: [ 
+				GtPlaygroundSlide new snippets: {'CallGraph'}; asElement
+				
+				"(GtClassCoder forClass: CallGraph) asElement "
+				
+				
+				];
 				elementWeight: 0.6).
 	show
 		addSlide:
