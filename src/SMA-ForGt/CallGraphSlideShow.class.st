@@ -132,11 +132,10 @@ CallGraphSlideShow >> addCallGraphGettingStartedTo: show [
 				newText: 'You can download Gt from https://gtoolkit.com/download/';
 				newText:
 					'Evaluate the two snippets to load this project from github, and instantiate this slideshow';
-				newTextWithFormat: (self nb: 'How can I format the URL to be a live link?');
 				element: [ GtPlaygroundSlide new
 						snippets:
 							{'Metacello new baseline: ''SMAForGt''; repository: ''github://onierstrasz/sma-examples/src''; load.'.
-							'SMAForGt openSlideshowsOverview'};
+							'SMAForGt openSlideshowOverview'};
 						asElement ];
 				elementWeight: 0.6).
 	show
@@ -162,17 +161,18 @@ CallGraphSlideShow >> addCallGraphGettingStartedTo: show [
 					'Evaluate the snippet to obtain a view of the File object. (NB: First copy the file Calls.txt to the image directory.)';
 				newText:
 					'You can also evaluate ''self contents'' on the result to obtain the contents of the File as a String object.';
+					newText: 'Alternatively we can directly access the file from its location in the check-out repository.'  ;
 				newText: 'We should encapsulate this data in a CallGraph object ...';
 				element: [ GtPlaygroundSlide new
 						snippets:
 							{'
-''Calls.txt'' asFileReference'};
+''Calls.txt'' asFileReference' . 'GtResourcesUtility default resourceAtPath: Path * ''onierstrasz'' / ''sma-examples'' / ''CallGraphDemo'' / ''Calls.txt'''};
 						asElement ];
 				elementWeight: 0.6).
 	show
 		addSlide:
 			(GtTextAndElementSlide new
-				newTextWithFormat: (self heading: 'Navigating to implementors and sender' );
+				newTextWithFormat: (self heading: 'Navigating to implementors and sender');
 				newText:
 					'How is asFileReference implemented? Just click on the little triangle to the right of the message.';
 				newText:
@@ -187,7 +187,7 @@ CallGraphSlideShow >> addCallGraphGettingStartedTo: show [
 	show
 		addSlide:
 			(GtTextAndElementSlide new
-				newTextWithFormat: (self heading: 'Navigating to classes' );
+				newTextWithFormat: (self heading: 'Navigating to classes');
 				newText:
 					'There are many ways to navigate to a class browser. One easy way is to go to the Meta tab.';
 				newText: 'You can also ask an object for its class';
@@ -212,11 +212,8 @@ CallGraphSlideShow >> addCallGraphImplementingTo: show [
 					'You can create a new class programmatically by sending a message to its superclass.';
 				newText:
 					'You can also create a new class in the Playground by clicking on the "wrench" icon.';
-				newTextWithFormat:
-					('Is it easy to point to the icon?.' asRopedText
-						foreground: Color red;
-						fontSize: 10);
-				element: [ GtPlaygroundSlide new
+				"newTextWithFormat: (self nb: 'Is it easy to point to the icon?.');"
+					element: [ GtPlaygroundSlide new
 						snippets:
 							{'Object subclass: #CallGraph
   instanceVariableNames: ''''
@@ -230,14 +227,8 @@ CallGraphSlideShow >> addCallGraphImplementingTo: show [
 				newTextWithFormat: ('The Class Coder' asRopedText fontSize: 36);
 				newText: 'The class coder is a dedicated browser for editing classes.';
 				newText: 'Be sure to always write a class comment!';
-				newTextWithFormat:
-					(self nb: 'Can I get a full Coder with the missing icons and buttons?');
-				newTextWithFormat: (self nb: 'FIX CODE ELEMENT');
-				element: [ "(GtClassCoder forClass: CallGraph) asElement"
-					GtPlaygroundSlide new
-						snippets: {'CallGraph'};
-						asElement ];
-				elementWeight: 0.6).
+				element: [ (GtCoder forClass: CallGraph) createInPager maximized ];
+				elementWeight: 0.75).
 	show
 		addSlide:
 			(GtTextAndElementSlide new
@@ -246,22 +237,17 @@ CallGraphSlideShow >> addCallGraphImplementingTo: show [
 					'The "from:" method will split the input "aString" into lines (by the character "carriage return"), and assign it  to the "calls" instance variable.';
 				newText:
 					'The "calls" method is an accessor, returning the value of the calls variable.';
-				
-						
-						newTextWithFormat: (self nb: 'How can I align the element to the center?' );
-						newTextWithFormat: (self nb: 'FIX CODE ELEMENT');
-						
-				element: [ 
-				
-				GtPlaygroundSlide new snippets: {'CallGraph >> #from:'.
-				'CallGraph >> #calls'}; asElement
-				
-				"self
-						methodCodersElementFor:
-							{(CallGraph >> #from:).
-							(CallGraph >> #calls)} "
-							
-							];
+				newText: 'NB: click on the checkmark icon to save the new methods!';
+				element: [ Object
+						subclass: #CallGraph
+						instanceVariableNames: 'calls'
+						classVariableNames: ''
+						package: 'CallGraph'.
+					self
+						methodCoderForClass: CallGraph
+						withSources:
+							{'from: aString calls := Character cr split: aString'.
+							'calls ^ calls'} ];
 				elementWeight: 0.6).
 	show
 		addSlide:
@@ -285,17 +271,15 @@ cg calls size'};
 					'Factory methods and other "static" methods are defined on the "class side".';
 				newText:
 					'Browse the "fromFileNamed:" method to see it is a "class" method, not an "instance" method. ';
-				
-						newTextWithFormat: (self nb: 'How can I open the coder with the fromFileNamed: method in focus and expanded?');
-						newTextWithFormat: (self nb: 'FIX CODE ELEMENT');
-				element: [ 
-				GtPlaygroundSlide new snippets: {'CallGraph'}; asElement
-				
-				"(GtClassCoder forClass: CallGraph) asElement "
-				
-				
-				];
+				element: [ "(GtClassCoder forClass: CallGraph) asElement "
+					self
+						methodCoderForClass: CallGraph class
+						withSource:
+							'fromFile: fileName ^ self new from: fileName asFileReference contents' ];
 				elementWeight: 0.6).
+				"********************
+				*** CONTINUE HERE ***
+				*********************"
 	show
 		addSlide:
 			(GtTextAndElementSlide new
@@ -305,10 +289,7 @@ cg calls size'};
 				newText: 'Example objects can be composed.';
 				newText:
 					'The <gtExample> pragma allows example methods to be run from the browser.';
-				newTextWithFormat:
-					('Is there a way to have the snippet already evaluated?' asRopedText
-						foreground: Color red;
-						fontSize: 10);
+				newTextWithFormat: (self nb: 'Is there a way to have the snippet already evaluated?');
 				element: [ (GtPlaygroundSlide new
 						snippets: {'CallGraphExamples>>#fiveLineExample'}) asElement ];
 				elementWeight: 0.6)
@@ -364,16 +345,54 @@ CallGraphSlideShow >> collectionHierarchy [
 ]
 
 { #category : #accessing }
+CallGraphSlideShow >> compile: methodSource inClass: aClass [
+	aClass compile: (OpalCompiler new format: methodSource)
+]
+
+{ #category : #accessing }
 CallGraphSlideShow >> create [
 	"SMAForGt openSlideshowInNewSpace: SMAForGt callGraphSlideshow"
 
 	| show |
 	show := GtSlideShow new.
-	self addCallGraphTitleTo: show.
-	self addCallGraphGettingStartedTo: show.
+	self ensureClassDefined: #CallGraph.
+	"self addCallGraphTitleTo: show.
+	self addCallGraphGettingStartedTo: show."
 	self addCallGraphImplementingTo: show.
 	self addCallGraphCollectionsAPITo: show.
 	self addCallGraphExplorationTo: show.
 	show makeArrowsVisible.
 	^ show
+]
+
+{ #category : #accessing }
+CallGraphSlideShow >> ensureClassDefined: classNameSymbol [
+	(Smalltalk at: classNameSymbol asSymbol ifAbsent: [ nil ]) isClass
+		ifFalse: [ Object
+				subclass: classNameSymbol
+				instanceVariableNames: ''
+				classVariableNames: ''
+				package: classNameSymbol asString ]
+]
+
+{ #category : #accessing }
+CallGraphSlideShow >> methodCoderForClass: aClass withSource: methodSource [
+	^ self methodCoderForClass: aClass withSources: {methodSource}
+]
+
+{ #category : #accessing }
+CallGraphSlideShow >> methodCoderForClass: aClass withSources: methodSourceCollection [
+	| container |
+	container := BlElement new.
+	methodSourceCollection
+		do: [ :methodSource | 
+			container
+				layout: BlLinearLayout vertical alignCenter;
+				addChild:
+					((GtMethodCoder
+						forClass: aClass
+						source: (OpalCompiler new format: methodSource))
+						expanded: true;
+						asElement) ].
+	^ container
 ]
