@@ -2,6 +2,12 @@
 I am the Pharo CallGraph demo, migrated to work with Gt.
 
 I show students how Smalltalk, Pharo and Gt can be leveraged to quickly develop a simple CallGraph analyzer.
+
+[[[
+CallGraphSlideShow new openInSpace
+]]]
+
+
 "
 Class {
 	#name : #CallGraphSlideShow,
