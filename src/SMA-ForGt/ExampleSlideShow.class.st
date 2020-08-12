@@ -38,9 +38,12 @@ ExampleSlideShow >> create [
 	show
 		addSlide:
 			(GtTextAndElementSlide new
-				newTextWithFormat: (self heading: 'A Method coder for a selected method');
-				element: [ self methodCoderForMethod: True >> #ifTrue:ifFalse: ];
-				elementWeight: 0.6).
+				newTextWithFormat: (self heading: 'A Method coder for selected methods');
+				element: [ self
+						methodCoderForMethods:
+							{(Boolean >> #not).
+							(True >> #not).
+							(False >> #not)} ]).
 	show
 		addSlide:
 			(GtTextAndElementSlide new

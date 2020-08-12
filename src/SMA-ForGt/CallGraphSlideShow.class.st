@@ -112,15 +112,29 @@ CallGraphSlideShow >> addCallGraphExplorationTo: show [
 				titleText: (self subtitle: 'Exploring the Call Graph')).
 
 
-	"********************  CONTINUE HERE  *********************"
 	show
 		addSlide:
 			(GtTextAndElementSlide new
 				newTextWithFormat: (self heading: 'Creating Calls, Methods and Classes');
 				newText:
 					'To create the call graph, we must split each line of the log into its individual fields by the $| character.';
-				element: [ self methodCoderForMethod: CallGraph >> #createCall: ];
+				element:
+						[ self methodCoderForMethods: {(CallGraph >> #createCall:)} ];
+				elementWeight: 0.6).
+	show
+		addSlide:
+			(GtTextAndElementSlide new
+				newTextWithFormat: (self heading: 'Creating Calls, Methods and Classes');
+				newText:
+					'To create the call graph, we must split each line of the log into its individual fields by the $| character.';
+				element: [ self
+						methodCoderForMethods:
+							{(CallGraph >> #initialize).
+							(CallGraph >> #methods).
+							(CallGraph >> #getMethod:)} ];
 				elementWeight: 0.6)
+				
+	"********************  CONTINUE HERE  *********************"
 ]
 
 { #category : #accessing }
@@ -353,11 +367,6 @@ CallGraphSlideShow >> collectionHierarchy [
 			Dictionary.
 			IdentityDictionary.
 			Bag}
-]
-
-{ #category : #accessing }
-CallGraphSlideShow >> compile: methodSource inClass: aClass [
-	aClass compile: (OpalCompiler new format: methodSource)
 ]
 
 { #category : #accessing }
