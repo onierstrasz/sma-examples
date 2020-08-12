@@ -110,31 +110,41 @@ CallGraphSlideShow >> addCallGraphExplorationTo: show [
 		addSlide:
 			(GtTitleSlide new
 				titleText: (self subtitle: 'Exploring the Call Graph')).
-
-
 	show
 		addSlide:
 			(GtTextAndElementSlide new
 				newTextWithFormat: (self heading: 'Creating Calls, Methods and Classes');
 				newText:
 					'To create the call graph, we must split each line of the log into its individual fields by the $| character.';
-				element:
-						[ self methodCoderForMethods: {(CallGraph >> #createCall:)} ];
+				newText: 'We use the fields to build JMethod and Call instances.';
+				element: [ self methodCoderForMethod: CallGraph >> #createCall: ];
 				elementWeight: 0.6).
 	show
 		addSlide:
 			(GtTextAndElementSlide new
-				newTextWithFormat: (self heading: 'Creating Calls, Methods and Classes');
+				newTextWithFormat: (self heading: 'Caching objects');
 				newText:
-					'To create the call graph, we must split each line of the log into its individual fields by the $| character.';
+					'We avoid creating the same JMethod object twice by using a Dictionary to cache them by their signature.';
 				element: [ self
 						methodCoderForMethods:
 							{(CallGraph >> #initialize).
 							(CallGraph >> #methods).
 							(CallGraph >> #getMethod:)} ];
-				elementWeight: 0.6)
-				
-	"********************  CONTINUE HERE  *********************"
+				elementWeight: 0.6).
+	show
+		addSlide:
+			(GtTextAndElementSlide new
+				newTextWithFormat: (self heading: 'Conclusion');
+				newText: 'We can now express a variety of queries in a high-level fashion.';
+				element: [ GtPlaygroundSlide new
+						snippets:
+							{'cg := CallGraph fromFile: ''Calls.txt''.
+cg'.
+							'(cg methods select: [ :m | m calls size > 1 ]) size'.
+							'(cg methods select: #isPolymorphic)
+  collect: [ :each | each -> (each calls collect: #args) asSet ]'};
+						asElement ];
+				elementWeight: 0.75)
 ]
 
 { #category : #accessing }
@@ -375,11 +385,11 @@ CallGraphSlideShow >> create [
 
 	| show |
 	show := GtSlideShow new.
-	"self ensureClassDefined: #MyCallGraph.
+	self ensureClassDefined: #MyCallGraph.
 	self addCallGraphTitleTo: show.
 	self addCallGraphGettingStartedTo: show.
 	self addCallGraphImplementingTo: show.
-	self addCallGraphCollectionsAPITo: show."
+	self addCallGraphCollectionsAPITo: show.
 	self addCallGraphExplorationTo: show.
 	show makeArrowsVisible.
 	^ show
