@@ -20,7 +20,7 @@ CallGraphSlideShow >> addCallGraphCollectionsAPITo: show [
 	show
 		addSlide:
 			(GtTitleSlide new
-				titleText: ('Modeling Calls, Methods and Classes.' asRopedText fontSize: 48)).
+				titleText: (self subtitle: 'Modeling Calls, Methods and Classes')).
 	show
 		addSlide:
 			(GtTextAndElementSlide new
@@ -40,8 +40,7 @@ CallGraphSlideShow >> addCallGraphCollectionsAPITo: show [
 				newTextWithFormat: (self heading: 'The Collection Hierarchy');
 				newText:
 					'The most important collections classes to remember are OrderedCollection, Array, String, Symbol and Dictionary';
-				element:
-						[ (GtInspector createOn: self collectionHierarchy) maximized ]).
+				element: [ (GtInspector createOn: self collectionHierarchy) maximized ]).
 	show
 		addSlide:
 			(GtTextAndElementSlide new
@@ -83,7 +82,7 @@ into: [:sum :each | sum + each]'};
 				element: [ GtPlaygroundSlide new
 						snippets:
 							{'5 factorial' . '[ :arg | arg factorial ] value: 5'.
-							'#factorial value: 5' . 'Symbol>>#value:' . '5 perform: #factorial'};
+							'#factorial value: 5' . '5 perform: #factorial'};
 						asElement ];
 				elementWeight: 0.75).
 	show
@@ -110,24 +109,18 @@ CallGraphSlideShow >> addCallGraphExplorationTo: show [
 	show
 		addSlide:
 			(GtTitleSlide new
-				titleText: ('Exploring the Call Graph' asRopedText fontSize: 48)).
-	show
-		addSlide:
-			(GtTextAndElementSlide new
-				newTextWithFormat: (self heading: 'Exploring the Call Graph');
-				newText: 'Let''s load in the rest of the implementation ...';
-				element: [ GtPlaygroundSlide new
-						snippets:
-							{'Metacello new baseline: ''SMACallGraph''; repository: ''github://onierstrasz/sma-examples/src''; load.'};
-						asElement ]).
+				titleText: (self subtitle: 'Exploring the Call Graph')).
+
 
 	"********************  CONTINUE HERE  *********************"
 	show
 		addSlide:
 			(GtTextAndElementSlide new
 				newTextWithFormat: (self heading: 'Creating Calls, Methods and Classes');
-
-				element: [ (GtCoder forMethod: CallGraph>>#createCall:) createInPager maximized ])
+				newText:
+					'To create the call graph, we must split each line of the log into its individual fields by the $| character.';
+				element: [ self methodCoderForMethod: CallGraph >> #createCall: ];
+				elementWeight: 0.6)
 ]
 
 { #category : #accessing }
@@ -226,6 +219,8 @@ CallGraphSlideShow >> addCallGraphImplementingTo: show [
 					'You can create a new class programmatically by sending a message to its superclass.';
 				newText:
 					'You can also create a new class in the Playground by clicking on the "wrench" icon.';
+				newText:
+					'(Since CallGraph is already implemented, we will start to build a new "MyCallGraph" class.)';
 				"newTextWithFormat: (self nb: 'Is it easy to point to the icon?.');"
 					element: [ GtPlaygroundSlide new
 						snippets:
@@ -308,24 +303,9 @@ cg calls size'};
 				newText: 'Example objects can be composed.';
 				newText:
 					'The <gtExample> pragma allows example methods to be run from the browser.';
-				element: [ self
-						methodCoderForClass: CallGraphExamples
-						withSource:
-							'fiveLineExample
-	<gtExample>
-	| cg |
-	cg := CallGraph new from: self javassistExtract.
-	self assert: cg calls size equals: 5.
-	^ cg' ];
-				elementWeight: 0.6).
-	show
-		addSlide:
-			(GtTextAndElementSlide new
-				newTextWithFormat: ('Evaluating test objects' asRopedText fontSize: 36);
-				element: [ GtPlaygroundSlide new
-						snippets: {'CallGraphExamples >> #fiveLineExample'};
-						asElement ];
-				elementWeight: 0.7)
+				element: [ (GtInspector createOn: CallGraphExamples >> #fiveLineExample)
+						maximized ];
+				elementWeight: 0.6)
 ]
 
 { #category : #accessing }
@@ -386,11 +366,11 @@ CallGraphSlideShow >> create [
 
 	| show |
 	show := GtSlideShow new.
-self ensureClassDefined: MyCallGraph.
+	"self ensureClassDefined: #MyCallGraph.
 	self addCallGraphTitleTo: show.
 	self addCallGraphGettingStartedTo: show.
 	self addCallGraphImplementingTo: show.
-	self addCallGraphCollectionsAPITo: show.
+	self addCallGraphCollectionsAPITo: show."
 	self addCallGraphExplorationTo: show.
 	show makeArrowsVisible.
 	^ show

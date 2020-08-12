@@ -38,6 +38,12 @@ ExampleSlideShow >> create [
 	show
 		addSlide:
 			(GtTextAndElementSlide new
+				newTextWithFormat: (self heading: 'A Method coder for a selected method');
+				element: [ self methodCoderForMethod: True >> #ifTrue:ifFalse: ];
+				elementWeight: 0.6).
+	show
+		addSlide:
+			(GtTextAndElementSlide new
 				newTextWithFormat: (self heading: 'New method definitions');
 				newText:
 					'These method definitions must be accepted before they will be compiled.';

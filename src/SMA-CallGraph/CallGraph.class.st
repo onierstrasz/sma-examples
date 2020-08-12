@@ -45,8 +45,6 @@ CallGraph >> classes [
 
 { #category : #initialization }
 CallGraph >> createCall: callString [
-	"NB: Object>>#assert:equals: is not defined in Pharo."
-
 	| fields callee owner call |
 	fields := $| split: callString.
 	self assert: fields size = 5.

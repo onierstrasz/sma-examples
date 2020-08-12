@@ -69,6 +69,16 @@ SMASlideshowStencil >> methodCoderForClass: aClass withSources: methodSourceColl
 ]
 
 { #category : #accessing }
+SMASlideshowStencil >> methodCoderForMethod: aMethod [
+	| container |
+	container := BlElement new.
+	container layout: BlLinearLayout vertical alignCenter.
+	container
+		addChild: ((GtMethodCoder forMethod: aMethod) expanded: true) asElement.
+	^ container
+]
+
+{ #category : #accessing }
 SMASlideshowStencil >> methodCodersElementFor: aMethodCollection [
 "Create an element containing multiple method coders"
 	| container |
