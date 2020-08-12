@@ -21,28 +21,23 @@ CallGraphSlideShow >> addCallGraphCollectionsAPITo: show [
 		addSlide:
 			(GtTextAndElementSlide new
 				newTextWithFormat: (self heading: 'Modeling Calls, Methods and Classes.');
-				newText:
-					'We want to build up a Call object for each line of the log. To do this, we need some help from the Collection classes.';
-				newTextWithFormat: (self nb: 'How to fix alignment?');
-				newTextWithFormat: (self nb: 'FIX CODE ELEMENT');
-				element: [ GtPlaygroundSlide new
-						snippets: {'CallGraph >> #initializeFrom:'};
-						"((GtMethodCoder forMethod: CallGraph >> #initializeFrom:)
-						expanded: true) asElement"
-							asElement ];
+				newText: 'We want to build up a Call object for each line of the log.';
+				newText: 'To do this, we need some help from the Collection classes.';
+				element: [ self
+						methodCoderForClass: CallGraph
+						withSource:
+							'from: aString
+  calls := (Character cr split: aString)
+      collect: [ :each | self createCall: each ]' ];
 				elementWeight: 0.5).
 	show
 		addSlide:
-			(GtTextAndElementSlide new
+			(GtLabelAndElementSlide new
 				newTextWithFormat: (self heading: 'The Collection Hierarchy');
 				newText:
 					'The most important collections classes to remember are OrderedCollection, Array, String, Symbol and Dictionary';
-				newTextWithFormat:
-					(self
-						nb:
-							'When the mondrian is embedded this way I cannot click on the classes and navigate to the Code. How can I embed this in sliding panes, without using a snippet?');
-				element: [ self collectionHierarchy asElement ];
-				elementWeight: 0.75).
+				element:
+						[ (GtInspector createOn: self collectionHierarchy) maximized ]).
 	show
 		addSlide:
 			(GtTextAndElementSlide new
@@ -109,6 +104,18 @@ into: [:sum :each | sum + each]'};
 { #category : #accessing }
 CallGraphSlideShow >> addCallGraphExplorationTo: show [ 
 
+	"********************  CONTINUE HERE  *********************"
+	
+		show
+		addSlide:
+			(GtTextAndElementSlide new
+				newTextWithFormat: (self heading:'Exploring the Call Graph');
+				newText: 'Let''s load in the rest of the implementation ...';
+				element: [ GtPlaygroundSlide new
+						snippets:
+							{'Metacello new baseline: ''SMACallGraph''; repository: ''github://onierstrasz/sma-examples/src''; load.'};
+						asElement ]).
+						
 	show
 		addSlide:
 			(GtTextAndElementSlide new
@@ -269,17 +276,22 @@ cg calls size'};
 				newTextWithFormat: ('Improving the interface' asRopedText fontSize: 36);
 				newText:
 					'Factory methods and other "static" methods are defined on the "class side".';
-				newText:
-					'Browse the "fromFileNamed:" method to see it is a "class" method, not an "instance" method. ';
-				element: [ "(GtClassCoder forClass: CallGraph) asElement "
-					self
+				newText: 'Note that this is a method of "CallGraph class", not "CallGraph".';
+				element: [ self
 						methodCoderForClass: CallGraph class
 						withSource:
-							'fromFile: fileName ^ self new from: fileName asFileReference contents' ];
+							'fromFileNamed: fileName ^ self new from: fileName asFileReference contents' ];
+				elementWeight: 0.5).
+	show
+		addSlide:
+			(GtTextAndElementSlide new
+				newTextWithFormat: ('Sending messages to a class' asRopedText fontSize: 36);
+				newText:
+					'Note that we send the "fromFileNamed:" message directly to the CallGraph class, not an instance. It will create an initialized instance for us.';
+				element: [ GtPlaygroundSlide new
+						snippets: {'(CallGraph fromFileNamed: ''Calls.txt'') calls size'};
+						asElement ];
 				elementWeight: 0.6).
-				"********************
-				*** CONTINUE HERE ***
-				*********************"
 	show
 		addSlide:
 			(GtTextAndElementSlide new
@@ -289,10 +301,24 @@ cg calls size'};
 				newText: 'Example objects can be composed.';
 				newText:
 					'The <gtExample> pragma allows example methods to be run from the browser.';
-				newTextWithFormat: (self nb: 'Is there a way to have the snippet already evaluated?');
-				element: [ (GtPlaygroundSlide new
-						snippets: {'CallGraphExamples>>#fiveLineExample'}) asElement ];
-				elementWeight: 0.6)
+				element: [ self
+						methodCoderForClass: CallGraphExamples
+						withSource:
+							'fiveLineExample
+	<gtExample>
+	| cg |
+	cg := CallGraph new from: self javassistExtract.
+	self assert: cg calls size equals: 5.
+	^ cg' ];
+				elementWeight: 0.6).
+	show
+		addSlide:
+			(GtTextAndElementSlide new
+				newTextWithFormat: ('Evaluating test objects' asRopedText fontSize: 36);
+				element: [ GtPlaygroundSlide new
+						snippets: {'CallGraphExamples >> #fiveLineExample'};
+						asElement ];
+				elementWeight: 0.7)
 ]
 
 { #category : #accessing }
@@ -356,43 +382,11 @@ CallGraphSlideShow >> create [
 	| show |
 	show := GtSlideShow new.
 	self ensureClassDefined: #CallGraph.
-	"self addCallGraphTitleTo: show.
-	self addCallGraphGettingStartedTo: show."
+	self addCallGraphTitleTo: show.
+	self addCallGraphGettingStartedTo: show.
 	self addCallGraphImplementingTo: show.
 	self addCallGraphCollectionsAPITo: show.
 	self addCallGraphExplorationTo: show.
 	show makeArrowsVisible.
 	^ show
-]
-
-{ #category : #accessing }
-CallGraphSlideShow >> ensureClassDefined: classNameSymbol [
-	(Smalltalk at: classNameSymbol asSymbol ifAbsent: [ nil ]) isClass
-		ifFalse: [ Object
-				subclass: classNameSymbol
-				instanceVariableNames: ''
-				classVariableNames: ''
-				package: classNameSymbol asString ]
-]
-
-{ #category : #accessing }
-CallGraphSlideShow >> methodCoderForClass: aClass withSource: methodSource [
-	^ self methodCoderForClass: aClass withSources: {methodSource}
-]
-
-{ #category : #accessing }
-CallGraphSlideShow >> methodCoderForClass: aClass withSources: methodSourceCollection [
-	| container |
-	container := BlElement new.
-	methodSourceCollection
-		do: [ :methodSource | 
-			container
-				layout: BlLinearLayout vertical alignCenter;
-				addChild:
-					((GtMethodCoder
-						forClass: aClass
-						source: (OpalCompiler new format: methodSource))
-						expanded: true;
-						asElement) ].
-	^ container
 ]

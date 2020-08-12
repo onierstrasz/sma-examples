@@ -9,9 +9,9 @@ Class {
 
 { #category : #accessing }
 SMASlideshowStencil >> classHierarchyFor: classes [
-	| view |
-	view := GtMondrian new.
-	view nodes
+	| m |
+	m := GtMondrian new.
+	m nodes
 		shape: [ :node | 
 			BlTextElement new
 				border: (BlBorder paint: Color black);
@@ -23,17 +23,49 @@ SMASlideshowStencil >> classHierarchyFor: classes [
 						bottom: 5
 						left: 5) ];
 		with: classes.
-	view edges
+	m edges
 		fromCenterBottom;
 		toCenterTop;
 		connectFrom: #superclass.
-	view layout tree levelDistance: 20.
-	^ view
+	m layout tree levelDistance: 20.
+	^ m
+]
+
+{ #category : #accessing }
+SMASlideshowStencil >> ensureClassDefined: classNameSymbol [
+	(Smalltalk at: classNameSymbol asSymbol ifAbsent: [ nil ]) isClass
+		ifFalse: [ Object
+				subclass: classNameSymbol
+				instanceVariableNames: ''
+				classVariableNames: ''
+				package: classNameSymbol asString ]
 ]
 
 { #category : #accessing }
 SMASlideshowStencil >> heading: aString [
 	^ aString asRopedText fontSize: 36
+]
+
+{ #category : #accessing }
+SMASlideshowStencil >> methodCoderForClass: aClass withSource: methodSource [
+	^ self methodCoderForClass: aClass withSources: {methodSource}
+]
+
+{ #category : #accessing }
+SMASlideshowStencil >> methodCoderForClass: aClass withSources: methodSourceCollection [
+	| container |
+	container := BlElement new.
+	container layout: BlLinearLayout vertical alignCenter.
+	methodSourceCollection
+		do: [ :methodSource | 
+			container
+				addChild:
+					((GtMethodCoder
+						forClass: aClass
+						source: (OpalCompiler new format: methodSource))
+						expanded: true;
+						asElement) ].
+	^ container
 ]
 
 { #category : #accessing }
