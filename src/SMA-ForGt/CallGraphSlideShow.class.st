@@ -381,8 +381,6 @@ CallGraphSlideShow >> collectionHierarchy [
 
 { #category : #accessing }
 CallGraphSlideShow >> create [
-	"SMAForGt openSlideshowInNewSpace: SMAForGt callGraphSlideshow"
-
 	| show |
 	show := GtSlideShow new.
 	self ensureClassDefined: #MyCallGraph.

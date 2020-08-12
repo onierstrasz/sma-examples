@@ -83,10 +83,9 @@ SMAForGt class >> openSlideshowOverview [
 	container
 		addChild:
 			(helper
-				newShowCardWithTitle: 'Callgraph Demo'
+				newShowCardWithTitle: 'Pharo 101 Demo'
 				slideshow: [ GtPharo101 new create ]
-				description:
-					'The basics of Pharo and Gt.').
+				description: 'The basics of Pharo and Gt.').
 	container
 		addChild:
 			(helper
@@ -94,7 +93,22 @@ SMAForGt class >> openSlideshowOverview [
 				slideshow: [ CallGraphSlideShow new create ]
 				description:
 					'A quick introduction to Smalltalk and GT using a running example of call graph analysis.').
-	"sectionContainer addChild: cardsContainer."
+
+	container
+		addChild:
+			(helper
+				newShowCardWithTitle: 'Reflection Demo'
+				slideshow: [ ReflectionDemoSlideShow new create ]
+				description:
+					'A live demo of some of the key reflective features of Pharo Smalltalk.').
+	container
+		addChild:
+			(helper
+				newShowCardWithTitle: 'Metaclass Demo'
+				slideshow: [ MetaclassDemoSlideShow new create ]
+				description:
+					'A live demo illustrating Smalltalk''s Metaclass hierarchy with a running example.').
+
 	BlSpace new
 		title: 'Space';
 		extent: 800 @ 600;
