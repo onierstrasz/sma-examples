@@ -42,6 +42,14 @@ MetaclassDemoSlideShow >> create [
 		addSlide:
 			(GtTitleSlide new
 				titleText: (self subtitle: 'Metaclasses in 7 points')).
+	show
+		addSlide:
+			(GtLabelAndElementSlide new
+				newTextWithFormat: (self heading: 'Classes and Metaclasses');
+				newText:
+					'Here we see clearly two parallel hierarchies. The classes on the left are all instances of the classes on the right, each of which is an instance of Metaclass.';
+				element: [ (GtInspector createOn: self snakesClassAndMetaclassHierarchy)
+						maximized ]).
 	show makeArrowsVisible.
 	^ show
 ]
@@ -55,4 +63,24 @@ MetaclassDemoSlideShow >> snakesAndLaddersClassHierarchy [
 				addAll: BoardSquare withAllSubclasses;
 				addAll: Die withAllSubclasses;
 				yourself)
+]
+
+{ #category : #accessing }
+MetaclassDemoSlideShow >> snakesClassAndMetaclassHierarchy [
+	^ self
+		classHierarchyFor:
+			{Object.
+			BoardSquare.
+			SnakeSquare.
+			Behavior.
+			ClassDescription.
+			Class.
+			Object class.
+			BoardSquare class.
+			SnakeSquare class.
+			Behavior class.
+			ClassDescription class.
+			Class class.
+			Metaclass.
+			Metaclass class} asOrderedCollection
 ]
