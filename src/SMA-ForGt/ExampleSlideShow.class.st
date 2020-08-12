@@ -25,28 +25,46 @@ ExampleSlideShow >> create [
 	show
 		addSlide:
 			(GtTextAndElementSlide new
-				newTextWithFormat: ('Embedding a full Class Coder' asRopedText fontSize: 36);
+				newTextWithFormat: (self heading: 'Embedding a full Class Coder');
 				element: [ (GtCoder forClass: Boolean) createInPager maximized ];
 				elementWeight: 0.6).
 	show
 		addSlide:
 			(GtTextAndElementSlide new
-				newTextWithFormat: ('New method definitions' asRopedText fontSize: 36);
+				newTextWithFormat: (self heading: 'Coder with a given method expanded');
+				element: [ (GtCoder forMethod: True >> #ifTrue:ifFalse:) createInPager
+					"maximized" ];
+				elementWeight: 0.6).
+	show
+		addSlide:
+			(GtTextAndElementSlide new
+				newTextWithFormat: (self heading: 'New method definitions');
 				newText:
 					'These method definitions must be accepted before they will be compiled.';
 				element: [ self
 						methodCoderForClass: Object
 						withSources: {'foo ^ ''foo''' . 'bar ^ ''bar'''} ];
 				elementWeight: 0.6).
-					show
+	show
 		addSlide:
 			(GtLabelAndElementSlide new
 				newTextWithFormat: (self heading: 'A Class Hierarchy');
 				newText: 'Note that diagram is live, so you can click on the classes.';
 				newText:
 					'This example also shows how to embed a full Inspector on a given object.';
-				element:
-						[ (GtInspector createOn: ((self classHierarchyFor:(Boolean withAllSubclasses) ))) maximized ]).
+				element: [ (GtInspector
+						createOn: (self classHierarchyFor: Boolean withAllSubclasses))
+						maximized ]).
+	show
+		addSlide:
+			(GtLabelAndElementSlide new
+				newTextWithFormat: (self heading: 'A GtExample');
+				newText:
+					'The example below shows an address book with multiple categories and contacts.'
+						asRopedText;
+				element: [ GtExampleSlide new
+						method: GtABAddressBookExample >> #contactsAddressBookWithCategories;
+						asElement ]).
 	show makeArrowsVisible.
 	^ show
 ]

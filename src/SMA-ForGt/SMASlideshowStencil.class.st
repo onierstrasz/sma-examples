@@ -105,3 +105,13 @@ SMASlideshowStencil >> openSlideshowInNewSpace: aSlideshow [
 		withHalos;
 		show
 ]
+
+{ #category : #accessing }
+SMASlideshowStencil >> subtitle: aString [
+	^ aString asRopedText fontSize: 50; foreground: Color gray
+]
+
+{ #category : #accessing }
+SMASlideshowStencil >> title: aString [
+	^ aString asRopedText fontSize: 70
+]

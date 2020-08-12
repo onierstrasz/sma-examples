@@ -19,12 +19,16 @@ Class {
 CallGraphSlideShow >> addCallGraphCollectionsAPITo: show [
 	show
 		addSlide:
+			(GtTitleSlide new
+				titleText: ('Modeling Calls, Methods and Classes.' asRopedText fontSize: 48)).
+	show
+		addSlide:
 			(GtTextAndElementSlide new
 				newTextWithFormat: (self heading: 'Modeling Calls, Methods and Classes.');
 				newText: 'We want to build up a Call object for each line of the log.';
 				newText: 'To do this, we need some help from the Collection classes.';
 				element: [ self
-						methodCoderForClass: CallGraph
+						methodCoderForClass: MyCallGraph
 						withSource:
 							'from: aString
   calls := (Character cr split: aString)
@@ -102,36 +106,34 @@ into: [:sum :each | sum + each]'};
 ]
 
 { #category : #accessing }
-CallGraphSlideShow >> addCallGraphExplorationTo: show [ 
-
-	"********************  CONTINUE HERE  *********************"
-	
-		show
+CallGraphSlideShow >> addCallGraphExplorationTo: show [
+	show
+		addSlide:
+			(GtTitleSlide new
+				titleText: ('Exploring the Call Graph' asRopedText fontSize: 48)).
+	show
 		addSlide:
 			(GtTextAndElementSlide new
-				newTextWithFormat: (self heading:'Exploring the Call Graph');
+				newTextWithFormat: (self heading: 'Exploring the Call Graph');
 				newText: 'Let''s load in the rest of the implementation ...';
 				element: [ GtPlaygroundSlide new
 						snippets:
 							{'Metacello new baseline: ''SMACallGraph''; repository: ''github://onierstrasz/sma-examples/src''; load.'};
 						asElement ]).
-						
+
+	"********************  CONTINUE HERE  *********************"
 	show
 		addSlide:
 			(GtTextAndElementSlide new
-				newTextWithFormat: (self heading:'Exploring the Call Graph');
-				newTextWithFormat: (self nb: 'still working here ...');
-				element: [ GtPlaygroundSlide new
-						snippets:
-							{'CallGraph fromFile: ''Calls.txt''' . '((CallGraph fromFile: ''Calls.txt'') methods
-select: [ :m | m calls size > 1 ]) size'.
-							'((CallGraph fromFile: ''Calls.txt'') methods select: #isPolymorphic)
-collect: [ :each | each -> (each calls collect: #args) asSet ]'};
-						asElement ]).
+				newTextWithFormat: (self heading: 'Creating Calls, Methods and Classes');
+
+				element: [ (GtCoder forMethod: CallGraph>>#createCall:) createInPager maximized ])
 ]
 
 { #category : #accessing }
 CallGraphSlideShow >> addCallGraphGettingStartedTo: show [
+	show
+		addSlide: (GtTitleSlide new titleText: (self subtitle: 'Getting Started')).
 	show
 		addSlide:
 			(GtTextAndElementSlide new
@@ -168,7 +170,8 @@ CallGraphSlideShow >> addCallGraphGettingStartedTo: show [
 					'Evaluate the snippet to obtain a view of the File object. (NB: First copy the file Calls.txt to the image directory.)';
 				newText:
 					'You can also evaluate ''self contents'' on the result to obtain the contents of the File as a String object.';
-					newText: 'Alternatively we can directly access the file from its location in the check-out repository.'  ;
+				newText:
+					'Alternatively we can directly access the file from its location in the check-out repository.';
 				newText: 'We should encapsulate this data in a CallGraph object ...';
 				element: [ GtPlaygroundSlide new
 						snippets:
@@ -206,11 +209,15 @@ CallGraphSlideShow >> addCallGraphGettingStartedTo: show [
 ''Calls.txt'' asFileReference' . '
 (''Calls.txt'' asFileReference) class'};
 						asElement ];
-				elementWeight: 0.6)
+				elementWeight: 0.7)
 ]
 
 { #category : #accessing }
 CallGraphSlideShow >> addCallGraphImplementingTo: show [
+	show
+		addSlide:
+			(GtTitleSlide new
+				titleText: (self subtitle: 'Implementing the CallGraph class')).
 	show
 		addSlide:
 			(GtTextAndElementSlide new
@@ -222,10 +229,10 @@ CallGraphSlideShow >> addCallGraphImplementingTo: show [
 				"newTextWithFormat: (self nb: 'Is it easy to point to the icon?.');"
 					element: [ GtPlaygroundSlide new
 						snippets:
-							{'Object subclass: #CallGraph
+							{'Object subclass: #MyCallGraph
   instanceVariableNames: ''''
   classVariableNames: ''''
-  package: ''CallGraph''' . 'MyCallGraph new'};
+  package: ''CallGraph''' . 'MyGreatCallGraph new'};
 						asElement ];
 				elementWeight: 0.6).
 	show
@@ -246,12 +253,12 @@ CallGraphSlideShow >> addCallGraphImplementingTo: show [
 					'The "calls" method is an accessor, returning the value of the calls variable.';
 				newText: 'NB: click on the checkmark icon to save the new methods!';
 				element: [ Object
-						subclass: #CallGraph
+						subclass: #MyCallGraph
 						instanceVariableNames: 'calls'
 						classVariableNames: ''
 						package: 'CallGraph'.
 					self
-						methodCoderForClass: CallGraph
+						methodCoderForClass: MyCallGraph
 						withSources:
 							{'from: aString calls := Character cr split: aString'.
 							'calls ^ calls'} ];
@@ -266,7 +273,7 @@ CallGraphSlideShow >> addCallGraphImplementingTo: show [
 				element: [ GtPlaygroundSlide new
 						snippets:
 							{'| cg |
-cg := CallGraph new from: ''Calls.txt'' asFileReference contents.
+cg := MyCallGraph new from: ''Calls.txt'' asFileReference contents.
 cg calls size'};
 						asElement ];
 				elementWeight: 0.6).
@@ -278,7 +285,7 @@ cg calls size'};
 					'Factory methods and other "static" methods are defined on the "class side".';
 				newText: 'Note that this is a method of "CallGraph class", not "CallGraph".';
 				element: [ self
-						methodCoderForClass: CallGraph class
+						methodCoderForClass: MyCallGraph class
 						withSource:
 							'fromFileNamed: fileName ^ self new from: fileName asFileReference contents' ];
 				elementWeight: 0.5).
@@ -289,7 +296,7 @@ cg calls size'};
 				newText:
 					'Note that we send the "fromFileNamed:" message directly to the CallGraph class, not an instance. It will create an initialized instance for us.';
 				element: [ GtPlaygroundSlide new
-						snippets: {'(CallGraph fromFileNamed: ''Calls.txt'') calls size'};
+						snippets: {'(MyCallGraph fromFileNamed: ''Calls.txt'') calls size'};
 						asElement ];
 				elementWeight: 0.6).
 	show
@@ -324,9 +331,7 @@ cg calls size'};
 { #category : #accessing }
 CallGraphSlideShow >> addCallGraphTitleTo: show [
 	show
-		addSlide:
-			(GtTitleSlide new
-				titleText: ('CallGraph Demo' asRopedText fontSize: 70))
+		addSlide: (GtTitleSlide new titleText: (self title: 'CallGraph Demo'))
 ]
 
 { #category : #accessing }
@@ -381,7 +386,7 @@ CallGraphSlideShow >> create [
 
 	| show |
 	show := GtSlideShow new.
-	self ensureClassDefined: #CallGraph.
+self ensureClassDefined: MyCallGraph.
 	self addCallGraphTitleTo: show.
 	self addCallGraphGettingStartedTo: show.
 	self addCallGraphImplementingTo: show.
