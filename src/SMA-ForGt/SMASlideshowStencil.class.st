@@ -70,11 +70,18 @@ SMASlideshowStencil >> methodCoderForClass: aClass withSources: methodSourceColl
 
 { #category : #accessing }
 SMASlideshowStencil >> methodCoderForMethod: aMethod [
+	^ self methodCoderForMethods: {aMethod}
+]
+
+{ #category : #accessing }
+SMASlideshowStencil >> methodCoderForMethods: aMethodList [
 	| container |
 	container := BlElement new.
 	container layout: BlLinearLayout vertical alignCenter.
-	container
-		addChild: ((GtMethodCoder forMethod: aMethod) expanded: true) asElement.
+	aMethodList
+		do: [ :aMethod | 
+			container
+				addChild: ((GtMethodCoder forMethod: aMethod) expanded: true) asElement ].
 	^ container
 ]
 
