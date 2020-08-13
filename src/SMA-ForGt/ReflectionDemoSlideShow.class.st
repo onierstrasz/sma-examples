@@ -28,19 +28,35 @@ ReflectionDemoSlideShow >> addIntercessionSlidesTo: show [
 				elementWeight: 0.7).
 	show
 		addSlide:
-			(GtTextAndElementSlide new
-				newTextWithFormat: (self heading: 'Slide with Text and Playground snippets.');
-				newText: 'You can adjust the space for the element between 0 and 1.';
+			(GtLabelAndElementSlide new
+				newTextWithFormat: (self heading: 'Installing a proxy');
+				newText:
+					'Note that only after installing the proxy, can the point respond to "invocationCount".';
 				element: [ GtPlaygroundSlide new
 						snippets:
-							{'point := 1@2'.
-'LoggingProxy for: point.
-point'.
-'point invocationCount'.
-							'point + 3@4.
-point invocationCount'};
-						asElement ];
-				elementWeight: 0.6)
+							{'point := 1@2.
+point class canUnderstand: #invocationCount'.
+							'LoggingProxy for: point.
+point class canUnderstand: #invocationCount'.
+							'point invocationCount' . 'point + 3@4. point invocationCount'};
+						asElement ]).
+	show
+		addSlide:
+			(GtLabelAndElementSlide new
+				newTextWithFormat: (self heading: 'Anonymous classes');
+				"newText: '';"
+					element: [ GtPlaygroundSlide new
+						snippets:
+							{'anonClass := Set newAnonymousSubclass.
+anonClass compile: ''add: anObject
+      Transcript show: ''''adding '''', anObject printString; cr.
+      ^ super add: anObject''.
+anonClass' . 'set := Set new.
+set add: 1.
+set' . 'set primitiveChangeClassTo: anonClass basicNew.
+set add: 2.
+set' . 'Transcript'};
+						asElement ])
 ]
 
 { #category : #accessing }
