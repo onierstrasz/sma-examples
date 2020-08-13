@@ -56,7 +56,40 @@ set add: 1.
 set' . 'set primitiveChangeClassTo: anonClass basicNew.
 set add: 2.
 set' . 'Transcript'};
-						asElement ])
+						asElement ]).
+	show
+		addSlide:
+			(GtTextAndElementSlide new
+				newTextWithFormat: (self heading: 'A Logging Method Wrapper');
+				newText:
+					'A method wrapper installs instelf in place of a CompiledMethod in the method dictionary of a class.';
+				newText: 'The #run:with:in: method implements its behavior.';
+				element:
+						[ (GtCoder forMethod: LoggingMethodWrapper >> #install) createInPager ];
+				elementWeight: 0.6).
+	show
+		addSlide:
+			(GtTextAndElementSlide new
+				newTextWithFormat: (self heading: 'Installing a method wrapper');
+				newText:
+					'It is critical to ensure that the method wrapper is correctly unintalled no matter what happens during its execution.';
+				element: [ GtPlaygroundSlide new
+						snippets:
+							{'"Install the slow, recursive factorial implementation."
+Integer compile: ''factorial
+			self > 0 ifTrue: [ ^ self * (self - 1) factorial ].
+			self = 0 ifTrue: [ ^ 1 ].
+			self error: ''''Not valid for negative integers'''''''.
+							'logger := LoggingMethodWrapper on: Integer>>#factorial.
+logger invocationCount'.
+							'5 factorial.
+logger invocationCount' . 'logger install.
+[ 10 factorial ] ensure: [ logger uninstall].
+logger invocationCount' . 'logger initialize.
+10 factorial.
+logger invocationCount'};
+						asElement ];
+				elementWeight: 0.6)
 ]
 
 { #category : #accessing }

@@ -20,6 +20,11 @@ LoggingMethodWrapper class >> on: aCompiledMethod [
 LoggingMethodWrapper >> flushCache [
 ]
 
+{ #category : #accessing }
+LoggingMethodWrapper >> initialize [
+	invocationCount := 0
+]
+
 { #category : #'initialize-release' }
 LoggingMethodWrapper >> initializeOn: aCompiledMethod [
 	method := aCompiledMethod.
