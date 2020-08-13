@@ -14,27 +14,39 @@ Class {
 }
 
 { #category : #accessing }
-ReflectionDemoSlideShow >> compiledMethodClassHierarchy [
-	"Not very interesting"
-
-	^ self
-		classHierarchyFor:
-			{Behavior.
-			ClassDescription.
-			Class.
-			Metaclass.
-			MethodDictionary.
-			CompiledMethod.
-			RBMethodNode.
-			RBMessageNode} asOrderedCollection
+ReflectionDemoSlideShow >> addIntercessionSlidesTo: show [
+	show
+		addSlide: (GtTitleSlide new titleText: (self subtitle: 'Intercession')).
+	show
+		addSlide:
+			(GtTextAndElementSlide new
+				newTextWithFormat: (self heading: 'Logging message sends with a minimal object');
+				newText:
+					'A LoggingProxy initially is its own subject. When we apply it to a subject, their references are swapped with "become:".';
+				element: [ (GtCoder forClass: LoggingProxy) createInPager
+					"maximized" ];
+				elementWeight: 0.7).
+	show
+		addSlide:
+			(GtTextAndElementSlide new
+				newTextWithFormat: (self heading: 'Slide with Text and Playground snippets.');
+				newText: 'You can adjust the space for the element between 0 and 1.';
+				element: [ GtPlaygroundSlide new
+						snippets:
+							{'point := 1@2'.
+'LoggingProxy for: point.
+point'.
+'point invocationCount'.
+							'point + 3@4.
+point invocationCount'};
+						asElement ];
+				elementWeight: 0.6)
 ]
 
 { #category : #accessing }
-ReflectionDemoSlideShow >> create [
-	| show |
-	show := GtSlideShow new.
+ReflectionDemoSlideShow >> addIntrospectionSlidesTo: show [
 	show
-		addSlide: (GtTitleSlide new titleText: (self title: 'Reflection Demo')).
+		addSlide: (GtTitleSlide new titleText: (self subtitle: 'Introspection')).
 	show
 		addSlide:
 			(GtLabelAndElementSlide new
@@ -79,7 +91,38 @@ ReflectionDemoSlideShow >> create [
 				element: [ GtPlaygroundSlide new
 						snippets: {'thisContext inspect.
 self halt'};
-						asElement ]).
+						asElement ])
+]
+
+{ #category : #accessing }
+ReflectionDemoSlideShow >> compiledMethodClassHierarchy [
+	"Not very interesting"
+
+	^ self
+		classHierarchyFor:
+			{Behavior.
+			ClassDescription.
+			Class.
+			Metaclass.
+			MethodDictionary.
+			CompiledMethod.
+			RBMethodNode.
+			RBMessageNode} asOrderedCollection
+]
+
+{ #category : #accessing }
+ReflectionDemoSlideShow >> create [
+	| show |
+	show := GtSlideShow new.
+	show
+		addSlide: (GtTitleSlide new titleText: (self title: 'Reflection Demo')).
+	show
+		addSlide:
+			(GtTextSlide new
+				newText:
+					'These slides accompany the course "Software Modeling and Analysis". http://scg.unibe.ch/teaching/sma').
+	"self addIntrospectionSlidesTo: show."
+	self addIntercessionSlidesTo: show. 
 	show makeArrowsVisible.
 	^ show
 ]

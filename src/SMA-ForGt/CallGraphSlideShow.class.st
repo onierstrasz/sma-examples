@@ -335,7 +335,11 @@ cg calls size'};
 { #category : #accessing }
 CallGraphSlideShow >> addCallGraphTitleTo: show [
 	show
-		addSlide: (GtTitleSlide new titleText: (self title: 'CallGraph Demo'))
+		addSlide: (GtTitleSlide new titleText: (self title: 'CallGraph Demo')).
+	show
+		addSlide:
+			(GtTextSlide new
+				newText: 'These slides accompany the course "Software Modeling and Analysis". http://scg.unibe.ch/teaching/sma')
 ]
 
 { #category : #accessing }

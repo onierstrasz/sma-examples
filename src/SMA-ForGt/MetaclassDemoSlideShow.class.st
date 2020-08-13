@@ -20,6 +20,10 @@ MetaclassDemoSlideShow >> create [
 	show
 		addSlide: (GtTitleSlide new titleText: (self title: 'Metaclass Demo')).
 	show
+		addSlide:
+			(GtTextSlide new
+				newText: 'These slides accompany the course "Software Modeling and Analysis". http://scg.unibe.ch/teaching/sma').
+	show
 		addSlide: (GtTitleSlide new titleText: (self subtitle: 'Snakes and Ladders')).
 	show
 		addSlide:
