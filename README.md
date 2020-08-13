@@ -56,3 +56,17 @@ Metacello new
 
 Run `SMA reflectionDemo` to obtain the snippets.
 
+# Demo SlideShows for Gt
+
+The examples and demos have also been adapted to the GlamorousToolkit.
+[Download the latest Gt image](https://gtoolkit.com/download/) and load the SMA examples as follows:
+
+```
+Metacello new
+   baseline: 'SMAForGt';
+   repository: 'github://onierstrasz/sma-examples/src';
+   load.
+```
+
+Then run `SMAForGt openSlideshowOverview` to open an overview window with links to the slideshows.
+(NB: The first one is the generic Pharo 101 slideshow for newcomers.)
