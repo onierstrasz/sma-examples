@@ -21,9 +21,10 @@ ReflectionDemoSlideShow >> addIntercessionSlidesTo: show [
 		addSlide:
 			(GtTextAndElementSlide new
 				newTextWithFormat: (self heading: 'Logging message sends with a minimal object');
+				newText: 'A LoggingProxy intercepts messages sent to a subject.';
 				newText:
-					'A LoggingProxy initially is its own subject. When we apply it to a subject, their references are swapped with "become:".';
-				element: [ (GtCoder forClass: LoggingProxy) createInPager
+					'The proxy is initially its own subject. When it is a applied to a subject, the references are swapped with #become:.';
+				element: [ (GtCoder forMethod: LoggingProxy>>#doesNotUnderstand:) createInPager
 					"maximized" ];
 				elementWeight: 0.7).
 	show
