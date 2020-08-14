@@ -107,6 +107,12 @@ SMASlideshowStencil >> methodCodersElementFor: aMethodCollection [
 ]
 
 { #category : #accessing }
+SMASlideshowStencil >> methodSourceWithoutInspectorFor: aMethod [
+	^ GtPager
+		createWrappedOn: ((aMethod gtSourceFor: GtPhlowView empty) asElementDo: [ :e | e ])
+]
+
+{ #category : #accessing }
 SMASlideshowStencil >> nb: aString [
 	^ aString asRopedText
 		foreground: Color red;

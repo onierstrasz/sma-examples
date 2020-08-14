@@ -327,9 +327,9 @@ cg calls size'};
 				newText: 'Example objects can be composed.';
 				newText:
 					'The <gtExample> pragma allows example methods to be run from the browser.';
-				element: [ (GtInspector createOn: CallGraphExamples >> #fiveLineExample)
-						maximized ];
-				elementWeight: 0.6)
+				element: [ self
+						methodSourceWithoutInspectorFor: CallGraphExamples >> #fiveLineExample ];
+				elementWeight: 0.7)
 ]
 
 { #category : #accessing }
