@@ -4,7 +4,7 @@ I offer demo slideshows for Gt instead of Playground snippets for Pharo.
 Run this to open the overview:
 
 [[[
-SMAForGt openSlideshowsOverview
+SMAForGt openSlideshowOverview
 ]]]
 
 
