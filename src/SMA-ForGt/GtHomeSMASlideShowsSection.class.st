@@ -1,3 +1,16 @@
+"
+I offer demo slideshows for Gt instead of Playground snippets for Pharo.
+
+I will be added automatically to the GtHome when this repo is loaded.
+
+Run this to open the overview in a separate window:
+
+[[[
+GtHomeSMASlideShowsSection openInSpace
+]]]
+
+
+"
 Class {
 	#name : #GtHomeSMASlideShowsSection,
 	#superclass : #GtHomeSection,
@@ -5,18 +18,22 @@ Class {
 }
 
 { #category : #accessing }
+GtHomeSMASlideShowsSection class >> openInSpace [
+	BlSpace new
+		title: 'Space';
+		extent: 800 @ 600;
+		addChild: GtHomeSMASlideShowsSection new create;
+		withHalos;
+		show
+]
+
+{ #category : #accessing }
 GtHomeSMASlideShowsSection >> create [
-	<gtHomeSection>
 	| sectionContainer cardsContainer |
 	sectionContainer := self newSectionContainer.
-	sectionContainer addChild: (self newSectionTitle: 'Slideshows').
+	sectionContainer
+		addChild: (self newSectionTitle: 'Software Modeling and Analysis Slideshows').
 	cardsContainer := self newCardsContainer.
-	cardsContainer
-		addChild:
-			(self
-				newShowCardWithTitle: 'Pharo 101 Demo'
-				slideshow: [ GtPharo101 new create ]
-				description: 'The basics of Pharo and Gt.').
 	cardsContainer
 		addChild:
 			(self
