@@ -40,7 +40,11 @@ CallGraphSlideShow >> addCallGraphCollectionsAPITo: show [
 				newTextWithFormat: (self heading: 'The Collection Hierarchy');
 				newText:
 					'The most important collections classes to remember are OrderedCollection, Array, String, Symbol and Dictionary';
-				element: [ (GtInspector createOn: self collectionHierarchy) maximized ]).
+				element: [ (GtPager
+						createWrappedOn:
+							(GtInspectorTool
+								forObject: CallGraphSlideShow new collectionHierarchy
+								viewSelector: #gtLiveFor:)) maximized ]).
 	show
 		addSlide:
 			(GtTextAndElementSlide new
@@ -343,6 +347,21 @@ CallGraphSlideShow >> addCallGraphTitleTo: show [
 ]
 
 { #category : #accessing }
+CallGraphSlideShow >> addTestSlideTo: show [
+	show
+		addSlide:
+			(GtLabelAndElementSlide new
+				newTextWithFormat: (self heading: 'The Collection Hierarchy');
+				newText:
+					'The most important collections classes to remember are OrderedCollection, Array, String, Symbol and Dictionary';
+				element: [ (GtPager
+						createWrappedOn:
+							(GtInspectorTool
+								forObject: CallGraphSlideShow new collectionHierarchy
+								viewSelector: #gtLiveFor:)) maximized ])
+]
+
+{ #category : #accessing }
 CallGraphSlideShow >> callGraphSlideshow [
 	"SMAForGt openSlideshowInNewSpace: SMAForGt callGraphSlideshow"
 
@@ -388,6 +407,7 @@ CallGraphSlideShow >> create [
 	| show |
 	show := GtSlideShow new.
 	self ensureClassDefined: #MyCallGraph.
+	self addTestSlideTo: show. 
 	self addCallGraphTitleTo: show.
 	self addCallGraphGettingStartedTo: show.
 	self addCallGraphImplementingTo: show.

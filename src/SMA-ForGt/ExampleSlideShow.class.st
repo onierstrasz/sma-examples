@@ -1,5 +1,11 @@
 "
 I show some typical examples of how to create slides.
+
+[[[
+ExampleSlideShow new openInSpace
+]]]
+
+
 "
 Class {
 	#name : #ExampleSlideShow,
@@ -59,11 +65,17 @@ ExampleSlideShow >> create [
 			(GtLabelAndElementSlide new
 				newTextWithFormat: (self heading: 'A Class Hierarchy');
 				newText: 'Note that diagram is live, so you can click on the classes.';
-				newText:
-					'This example also shows how to embed a full Inspector on a given object.';
-				element: [ (GtInspector
-						createOn: (self classHierarchyFor: Boolean withAllSubclasses))
-						maximized ]).
+				element: [ (GtPager
+						createWrappedOn:
+							(GtInspectorTool
+								forObject: (self classHierarchyFor: Boolean withAllSubclasses)
+								viewSelector: #gtLiveFor:)) maximized ]).
+	show
+		addSlide:
+			(GtLabelAndElementSlide new
+				newTextWithFormat: (self heading: 'A full Inspector');
+				newText: 'This example  shows how to embed a full Inspector on a given object.';
+				element: [ (GtInspector createOn: Boolean) maximized ]).
 	show
 		addSlide:
 			(GtLabelAndElementSlide new
