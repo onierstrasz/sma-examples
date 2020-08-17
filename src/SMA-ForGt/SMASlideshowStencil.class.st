@@ -3,7 +3,7 @@ I am an abstract superclass for SMA slideshow stencils, offering some useful met
 "
 Class {
 	#name : #SMASlideshowStencil,
-	#superclass : #BrStencil,
+	#superclass : #GtSlideShowStencil,
 	#category : #'SMA-ForGt'
 }
 
@@ -47,99 +47,8 @@ SMASlideshowStencil >> ensureClassDefined: classNameSymbol [
 ]
 
 { #category : #accessing }
-SMASlideshowStencil >> heading: aString [
-	^ aString asRopedText fontSize: 36
-]
-
-{ #category : #accessing }
-SMASlideshowStencil >> methodCoderForClass: aClass withSource: methodSource [
-	^ self methodCoderForClass: aClass withSources: {methodSource}
-]
-
-{ #category : #accessing }
-SMASlideshowStencil >> methodCoderForClass: aClass withSources: methodSourceCollection [
-	| container |
-	container := BlElement new.
-	container layout: BlLinearLayout vertical alignCenter.
-	methodSourceCollection
-		do: [ :methodSource | 
-			container
-				addChild:
-					((GtMethodCoder
-						forClass: aClass
-						source: (OpalCompiler new format: methodSource))
-						expanded: true;
-						asElement) ].
-	^ container
-]
-
-{ #category : #accessing }
-SMASlideshowStencil >> methodCoderForMethod: aMethod [
-	^ self methodCoderForMethods: {aMethod}
-]
-
-{ #category : #accessing }
-SMASlideshowStencil >> methodCoderForMethods: aMethodList [
-	| container |
-	container := BlElement new.
-	container layout: BlLinearLayout vertical alignCenter.
-	aMethodList
-		do: [ :aMethod | 
-			container
-				addChild: ((GtMethodCoder forMethod: aMethod) expanded: true) asElement ].
-	^ container
-]
-
-{ #category : #accessing }
-SMASlideshowStencil >> methodCodersElementFor: aMethodCollection [
-"Create an element containing multiple method coders"
-	| container |
-	container := BlElement new
-		layout: BlLinearLayout vertical;
-		constraintsDo: [ :c | 
-			c horizontal matchParent.
-			c vertical fitContent ].
-	aMethodCollection
-		do: [ :method | 
-			container
-				addChild: ((GtMethodCoder forMethod: method) expanded: true) asElement ].
-	^ container
-]
-
-{ #category : #accessing }
-SMASlideshowStencil >> methodSourceWithoutInspectorFor: aMethod [
-	^ GtPager
-		createWrappedOn: ((aMethod gtSourceFor: GtPhlowView empty) asElementDo: [ :e | e ])
-]
-
-{ #category : #accessing }
 SMASlideshowStencil >> nb: aString [
 	^ aString asRopedText
 		foreground: Color red;
 		fontSize: 12
-]
-
-{ #category : #accessing }
-SMASlideshowStencil >> openInSpace [
-	self openSlideshowInNewSpace: (self create)
-]
-
-{ #category : #accessing }
-SMASlideshowStencil >> openSlideshowInNewSpace: aSlideshow [
-	BlSpace new
-		title: 'Space';
-		extent: 1200 @ 600;
-		addChild: aSlideshow makeArrowsVisible create;
-		withHalos;
-		show
-]
-
-{ #category : #accessing }
-SMASlideshowStencil >> subtitle: aString [
-	^ aString asRopedText fontSize: 50; foreground: Color gray
-]
-
-{ #category : #accessing }
-SMASlideshowStencil >> title: aString [
-	^ aString asRopedText fontSize: 70
 ]

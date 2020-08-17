@@ -407,7 +407,7 @@ CallGraphSlideShow >> create [
 	| show |
 	show := GtSlideShow new.
 	self ensureClassDefined: #MyCallGraph.
-	self addTestSlideTo: show. 
+	"self addTestSlideTo: show. "
 	self addCallGraphTitleTo: show.
 	self addCallGraphGettingStartedTo: show.
 	self addCallGraphImplementingTo: show.
