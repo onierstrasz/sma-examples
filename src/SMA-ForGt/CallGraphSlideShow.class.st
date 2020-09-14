@@ -253,9 +253,9 @@ CallGraphSlideShow >> addCallGraphImplementingTo: show [
 					element: [ GtPlaygroundSlide new
 						snippets:
 							{'Object subclass: #MyCallGraph
-  instanceVariableNames: ''''
+  instanceVariableNames: ''calls''
   classVariableNames: ''''
-  package: ''CallGraph''' . 'MyGreatCallGraph new'};
+  package: ''CallGraph''' . 'MyCallGraph new'};
 						asElement ];
 				elementWeight: 0.6).
 	show
