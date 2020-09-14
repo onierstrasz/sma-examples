@@ -165,7 +165,7 @@ CallGraphSlideShow >> addCallGraphGettingStartedTo: show [
 				element: [ GtPlaygroundSlide new
 						snippets:
 							{'Metacello new baseline: ''SMAForGt''; repository: ''github://onierstrasz/sma-examples/src''; load.'.
-							'SMAForGt openSlideshowOverview'};
+							'CallGraphSlideShow new openInSpace'};
 						asElement ];
 				elementWeight: 0.6).
 	show
