@@ -178,7 +178,7 @@ CallGraphSlideShow >> addCallGraphGettingStartedTo: show [
 					'Right-click next to the expression to see what you can do. Also see the tooltip descriptions of the various buttons.';
 				newText: 'Inspecting an expression opens an Inspector on the result.';
 				newText:
-					'Lifting up the gray bar at the bottom of the Inpsctor reveals a new evaluation pane for that object. Evaluate ''self size'' there.';
+					'Lifting up the gray bar at the bottom of the Inspector reveals a new evaluation pane for that object. Evaluate ''self size'' there.';
 				element: [ GtPlaygroundSlide new
 						snippets: {'''Hello world'''};
 						asElement ];
