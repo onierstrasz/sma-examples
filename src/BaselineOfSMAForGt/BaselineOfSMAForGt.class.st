@@ -24,8 +24,5 @@ BaselineOfSMAForGt >> baseline: spec [
 				with: [ spec requires: #'SMA-CallGraph'.
 					spec requires: #'SMA-SnakesAndLadders'.
 					spec requires: #'SMA-Reflection' ] ].
-			
-			spec package: #'SMA-Extras'.
-			
-		
+	spec package: #'SMA-Extras' with: [ spec requires: #'SMA-ForGt' ]
 ]
