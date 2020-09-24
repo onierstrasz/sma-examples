@@ -123,7 +123,7 @@ ReflectionDemoSlideShow >> addIntrospectionSlidesTo: show [
 			(GtLabelAndElementSlide new
 				newTextWithFormat: (self heading: 'Finding super-sends to other methods');
 				newText:
-					'This will take a momeent as we are querying all methods in the system.';
+					'This will take a moment as we are querying all methods in the system.';
 				element: [ GtPlaygroundSlide new
 						snippets:
 							{'(CompiledMethod allInstances select: #sendsToSuper)
@@ -171,7 +171,7 @@ ReflectionDemoSlideShow >> create [
 			(GtTextSlide new
 				newText:
 					'These slides accompany the course "Software Modeling and Analysis". http://scg.unibe.ch/teaching/sma').
-	"self addIntrospectionSlidesTo: show."
+	self addIntrospectionSlidesTo: show.
 	self addIntercessionSlidesTo: show. 
 	show makeArrowsVisible.
 	^ show
