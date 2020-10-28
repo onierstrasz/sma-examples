@@ -1,3 +1,11 @@
+"
+Lazily build a Moose model from an mse file at a known location, and remember it.
+
+[[[
+MooseModelBuilder argoUML
+]]]
+
+"
 Class {
 	#name : #MooseModelBuilder,
 	#superclass : #Object,
@@ -11,15 +19,16 @@ MooseModelBuilder class >> argoUML [
 	modelUrl := 'https://dl.feenk.com/moose-tutorial/argouml/'.
 	^ MooseModel root allModels
 		detect: [ :each | each name = modelName ]
-		ifNone: [ self installZipFile: modelName , '.zip' fromUrl: modelUrl.
-			self buildModelNamed: modelName ]
+		ifNone: [ self buildModelNamed: modelName fromUrl: modelUrl ]
 ]
 
 { #category : #accessing }
-MooseModelBuilder class >> buildModelNamed: modelName [
+MooseModelBuilder class >> buildModelNamed: modelName fromUrl: archiveUrl [
 	| modelFile modelArgo |
-	modelFile := FileLocator imageDirectory asFileReference / self modelFolderName  
-		/ modelName / (modelName , '.mse').
+	modelFile := FileLocator imageDirectory asFileReference
+		/ self modelFolderName / modelName / (modelName , '.mse').
+	modelFile exists
+		ifFalse: [ self installZipFile: modelName fromUrl: archiveUrl ].
 	modelArgo := MooseModel new importMSEFromFile: modelFile.
 	MooseModel root add: modelArgo.
 	^ modelArgo
@@ -45,8 +54,7 @@ MooseModelBuilder class >> lucene [
 	modelUrl := 'https://dl.feenk.com/moose-tutorial/lucene-solr/'.
 	^ MooseModel root allModels
 		detect: [ :each | each name = modelName ]
-		ifNone: [ self installZipFile: modelName , '.zip' fromUrl: modelUrl.
-			self buildModelNamed: modelName ]
+		ifNone: [ self buildModelNamed: modelName fromUrl: modelUrl ]
 ]
 
 { #category : #accessing }
