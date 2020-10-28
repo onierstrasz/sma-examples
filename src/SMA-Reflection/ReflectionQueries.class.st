@@ -34,7 +34,7 @@ CompiledMethod allInstances
 ReflectionQueries >> inspectSmalltalkSyntaxMethods [
 	"Find and inspect all Smalltalk methods with a selection of key features"
 (
-	(((((((((SystemNavigation default allMethods select: #sendsToSuper)
+	(((((((((SystemNavigation argoUML allMethods select: #sendsToSuper)
 		select: [ :m | m comment isNotNil ]) select: [ :m | m numArgs > 0 ])
 		select: [ :m | m assignmentNodes isNotEmpty ]) select: [ :m | m selfMessages isNotEmpty ])
 		select: [ :m | (m sendNodes select: #isUnary) isNotEmpty ])
