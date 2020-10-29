@@ -2,18 +2,18 @@
 Lazily build a Moose model from an mse file at a known location, and remember it.
 
 [[[
-MooseModelBuilder argoUML
+MooseModelExamples argoUML
 ]]]
 
 "
 Class {
-	#name : #MooseModelBuilder,
+	#name : #MooseModelExamples,
 	#superclass : #Object,
 	#category : #'SMA-ForGt-Moose'
 }
 
 { #category : #accessing }
-MooseModelBuilder class >> argoUML [
+MooseModelExamples class >> argoUML [
 	| modelName modelUrl |
 	modelName := 'ArgoUML-0-34'.
 	modelUrl := 'https://dl.feenk.com/moose-tutorial/argouml/'.
@@ -23,19 +23,19 @@ MooseModelBuilder class >> argoUML [
 ]
 
 { #category : #accessing }
-MooseModelBuilder class >> buildModelNamed: modelName fromUrl: archiveUrl [
+MooseModelExamples class >> buildModelNamed: modelName fromUrl: archiveUrl [
 	| modelFile modelArgo |
 	modelFile := FileLocator imageDirectory asFileReference
 		/ self modelFolderName / modelName / (modelName , '.mse').
 	modelFile exists
-		ifFalse: [ self installZipFile: modelName fromUrl: archiveUrl ].
+		ifFalse: [ self installZipFile: modelName , '.zip' fromUrl: archiveUrl ].
 	modelArgo := MooseModel new importMSEFromFile: modelFile.
 	MooseModel root add: modelArgo.
 	^ modelArgo
 ]
 
 { #category : #accessing }
-MooseModelBuilder class >> installZipFile: archiveFileName fromUrl: archiveUrl [
+MooseModelExamples class >> installZipFile: archiveFileName fromUrl: archiveUrl [
 	| targetFolder |
 	targetFolder := (FileLocator imageDirectory asFileReference
 		/ self modelFolderName) ensureCreateDirectory.
@@ -48,7 +48,7 @@ MooseModelBuilder class >> installZipFile: archiveFileName fromUrl: archiveUrl [
 ]
 
 { #category : #accessing }
-MooseModelBuilder class >> lucene [
+MooseModelExamples class >> lucene [
 	| modelName modelUrl |
 	modelName := 'lucene-solr-52f2a77'.
 	modelUrl := 'https://dl.feenk.com/moose-tutorial/lucene-solr/'.
@@ -58,6 +58,6 @@ MooseModelBuilder class >> lucene [
 ]
 
 { #category : #accessing }
-MooseModelBuilder class >> modelFolderName [
+MooseModelExamples class >> modelFolderName [
 	^ 'models'
 ]
