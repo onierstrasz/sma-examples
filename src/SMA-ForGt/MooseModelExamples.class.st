@@ -61,3 +61,13 @@ MooseModelExamples class >> lucene [
 MooseModelExamples class >> modelFolderName [
 	^ 'models'
 ]
+
+{ #category : #accessing }
+MooseModelExamples class >> weka [
+	| modelName modelUrl |
+	modelName := 'weka-3-8'.
+	modelUrl := 'https://dl.feenk.com/moose-tutorial/weka/'.
+	^ MooseModel root allModels
+		detect: [ :each | each name = modelName ]
+		ifNone: [ self buildModelNamed: modelName fromUrl: modelUrl ]
+]
