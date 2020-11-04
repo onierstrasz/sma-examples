@@ -10,7 +10,7 @@ ReflectionDemoSlideShow new openInSpace
 Class {
 	#name : #ReflectionDemoSlideShow,
 	#superclass : #SMASlideshowStencil,
-	#category : #'SMA-ForGt-SMA-ForGt'
+	#category : #'SMA-ForGt-Slideshows'
 }
 
 { #category : #accessing }

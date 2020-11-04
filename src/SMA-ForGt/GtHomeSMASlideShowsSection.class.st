@@ -14,7 +14,7 @@ GtHomeSMASlideShowsSection openInSpace
 Class {
 	#name : #GtHomeSMASlideShowsSection,
 	#superclass : #GtHomeSection,
-	#category : #'SMA-ForGt-SMA-ForGt'
+	#category : #'SMA-ForGt-Slideshows'
 }
 
 { #category : #accessing }

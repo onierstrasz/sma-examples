@@ -12,7 +12,7 @@ CallGraphSlideShow new openInSpace
 Class {
 	#name : #CallGraphSlideShow,
 	#superclass : #SMASlideshowStencil,
-	#category : #'SMA-ForGt-SMA-ForGt'
+	#category : #'SMA-ForGt-Slideshows'
 }
 
 { #category : #accessing }

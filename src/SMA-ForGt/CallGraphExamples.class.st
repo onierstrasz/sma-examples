@@ -1,7 +1,7 @@
 Class {
 	#name : #CallGraphExamples,
 	#superclass : #Object,
-	#category : #'SMA-ForGt'
+	#category : #'SMA-ForGt-Slideshows'
 }
 
 { #category : #accessing }

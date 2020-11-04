@@ -4,7 +4,7 @@ I am an abstract superclass for SMA slideshow stencils, offering some useful met
 Class {
 	#name : #SMASlideshowStencil,
 	#superclass : #GtSlideShowStencil,
-	#category : #'SMA-ForGt'
+	#category : #'SMA-ForGt-Slideshows'
 }
 
 { #category : #accessing }
