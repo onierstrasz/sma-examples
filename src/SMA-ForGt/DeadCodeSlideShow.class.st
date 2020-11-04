@@ -14,6 +14,20 @@ Class {
 }
 
 { #category : #accessing }
+DeadCodeSlideShow >> addCompleteReachableClassesPlaygroundTo: show [
+	show
+		addSlide:
+			(GtLabelAndElementLiveSlide new
+				element: [ GtPlaygroundLiveSlide new
+						snippets:
+							{'"Lazily load the model"
+model := MooseModelExamples argoUML.'.
+							self reachableMethodsSnippet.
+							self reachableClassesSnippet};
+						asElement ])
+]
+
+{ #category : #accessing }
 DeadCodeSlideShow >> addCompleteReachableMethodsPlaygroundTo: show [
 	show
 		addSlide:
@@ -23,6 +37,55 @@ DeadCodeSlideShow >> addCompleteReachableMethodsPlaygroundTo: show [
 							{'"Lazily load the model"
 model := MooseModelExamples argoUML.'.
 							self reachableMethodsSnippet};
+						asElement ])
+]
+
+{ #category : #accessing }
+DeadCodeSlideShow >> addCompleteRecursivelyReachableClassesPlaygroundTo: show [
+	show
+		addSlide:
+			(GtLabelAndElementLiveSlide new
+				element: [ GtPlaygroundLiveSlide new
+						snippets:
+							{'"Lazily load the model"
+model := MooseModelExamples argoUML.'.
+							self reachableMethodsSnippet.
+							self reachableClassesSnippet.
+							self recursivelyReachableClassesSnippet};
+						asElement ])
+]
+
+{ #category : #accessing }
+DeadCodeSlideShow >> addFulWekaScriptTo: show [ 
+	show
+		addSlide:
+			(GtLabelAndElementLiveSlide new
+				element: [ GtPlaygroundLiveSlide new
+						snippets:
+							{'"Lazily load the model"
+model := MooseModelExamples weka.'.
+							self reachableMethodsSnippet.
+							self reachableClassesSnippet.
+							self recursivelyReachableClassesSnippet.
+							self unreachableClassesSnippet.
+							self viewSnippet};
+						asElement ])
+]
+
+{ #category : #accessing }
+DeadCodeSlideShow >> addFullArgoUMLScriptTo: show [
+	show
+		addSlide:
+			(GtLabelAndElementLiveSlide new
+				element: [ GtPlaygroundLiveSlide new
+						snippets:
+							{'"Lazily load the model"
+model := MooseModelExamples argoUML.'.
+							self reachableMethodsSnippet.
+							self reachableClassesSnippet.
+							self recursivelyReachableClassesSnippet.
+							self unreachableClassesSnippet.
+							self viewSnippet};
 						asElement ])
 ]
 
@@ -55,13 +118,76 @@ model := MooseModelExamples argoUML.'};
 ]
 
 { #category : #accessing }
+DeadCodeSlideShow >> addReachableClassesPlaygroundTo: show [
+	show
+		addSlide:
+			(GtLabelAndElementLiveSlide new
+				element: [ GtPlaygroundLiveSlide new
+						snippets:
+							{'"Lazily load the model"
+model := MooseModelExamples argoUML.'.
+							self reachableMethodsSnippet.
+							'"Find the classes of reachable methods"
+reachableClasses := reachableMethods collect: #parentType.
+
+"TO DO: What other classes must be included for the code to run?"
+
+reachableClasses.'};
+						asElement ])
+]
+
+{ #category : #accessing }
 DeadCodeSlideShow >> addReachableMethodsPlaygroundTo: show [
 	show
 		addSlide:
 			(GtLabelAndElementLiveSlide new
 				element: [ GtPlaygroundLiveSlide new
 						snippets: {'"Lazily load the model"
-model := MooseModelExamples argoUML.'};
+model := MooseModelExamples argoUML.' . '"Find all methods reachable from main."
+reachableMethods := Set new.
+methodsToCheck := (model allModelMethods select: [:m | m name = ''main'']) entities.
+
+"TO DO: Recursively find reachable methods ..."
+
+reachableMethods.'};
+						asElement ])
+]
+
+{ #category : #accessing }
+DeadCodeSlideShow >> addRecursivelyReachableClassesPlaygroundTo: show [ 
+
+	show
+		addSlide:
+			(GtLabelAndElementLiveSlide new
+				element: [ GtPlaygroundLiveSlide new
+						snippets:
+							{'"Lazily load the model"
+model := MooseModelExamples argoUML.'.
+							self reachableMethodsSnippet.
+							self reachableClassesSnippet.
+							 '"Recursively add all classes referenced from reachable classes"
+newTypes := reachableClasses  flatCollect: #allProviderTypes.
+newTypes removeAllFoundIn: reachableClasses.
+"TO DO: recursively add new, reachable classes"
+
+newTypes.
+reachableClasses.'};
+						asElement ])
+]
+
+{ #category : #accessing }
+DeadCodeSlideShow >> addUnreachableClassesPlaygroundTo: show [
+	show
+		addSlide:
+			(GtLabelAndElementLiveSlide new
+				element: [ GtPlaygroundLiveSlide new
+						snippets:
+							{'"Lazily load the model"
+model := MooseModelExamples argoUML.'.
+							self reachableMethodsSnippet.
+							self reachableClassesSnippet.
+							self recursivelyReachableClassesSnippet.
+							self unreachableClassesSnippet};
 						asElement ])
 ]
 
@@ -71,10 +197,16 @@ DeadCodeSlideShow >> create [
 	show := GtSlideShow new.
 	show
 		addSlide: (GtTitleSlide new titleText: (self title: 'Dead Code Detection Demo')).
-	self addLoadModelPlaygroundTo:  show.
+	self addLoadModelPlaygroundTo: show.
 	self addReachableMethodsPlaygroundTo: show.
 	self addCompleteReachableMethodsPlaygroundTo: show.
-	self addFullScriptTo: show.
+	self addReachableClassesPlaygroundTo: show.
+	self addCompleteReachableClassesPlaygroundTo: show.
+	self addRecursivelyReachableClassesPlaygroundTo: show.
+	self addCompleteRecursivelyReachableClassesPlaygroundTo: show.
+	self addUnreachableClassesPlaygroundTo: show.
+	self addFullArgoUMLScriptTo: show.
+	self addFulWekaScriptTo: show.
 	show makeArrowsVisible.
 	^ show
 ]
@@ -98,7 +230,7 @@ reachableClasses addAll: ((((reachableMethods flatCollect:#accesses) collect: #v
 "Add all superclasses"
 reachableClasses addAll: (reachableClasses flatCollect: #withSuperclassHierarchy).
 "Add all subclasses (?)"
-"reachableClasses addAll: (reachableClasses flatCollect: #withSubclassHierarchy)."
+reachableClasses addAll: (reachableClasses flatCollect: #withSubclassHierarchy).
 "Add all classes referenced from reachable methods"
 reachableClasses addAll:(reachableMethods flatCollect: #providerTypes).'
 ]
