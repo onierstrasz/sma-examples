@@ -112,8 +112,9 @@ DeadCodeSlideShow >> addLoadModelPlaygroundTo: show [
 		addSlide:
 			(GtLabelAndElementLiveSlide new
 				element: [ GtPlaygroundLiveSlide new
-						snippets: {'"Lazily load the model"
-model := MooseModelExamples argoUML.'};
+						snippets:
+							{'"Lazily load the model"
+model := MooseModelExamples argoUML.' . '"TO DO: How do we identify the dead code (unreachable classes)?"'};
 						asElement ])
 ]
 
@@ -230,7 +231,7 @@ reachableClasses addAll: ((((reachableMethods flatCollect:#accesses) collect: #v
 "Add all superclasses"
 reachableClasses addAll: (reachableClasses flatCollect: #withSuperclassHierarchy).
 "Add all subclasses (?)"
-reachableClasses addAll: (reachableClasses flatCollect: #withSubclassHierarchy).
+"reachableClasses addAll: (reachableClasses flatCollect: #withSubclassHierarchy)."
 "Add all classes referenced from reachable methods"
 reachableClasses addAll:(reachableMethods flatCollect: #providerTypes).'
 ]
