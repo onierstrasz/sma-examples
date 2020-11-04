@@ -5,6 +5,7 @@ I am a live slideshow containing examples of typical kinds of slides.
 GtLiveSlideExamples openInSpace
 ]]]
 
+TODO: Migrate the rest from ${class:name=GtSlideShowExamples}$.
 
 "
 Class {
@@ -33,7 +34,7 @@ GtLiveSlideExamples >> textAndPlaygroundSnippetsFor: aSlide [
 		element: [ GtPlaygroundLiveSlide new
 				snippets: {'3 + 4' . '''Hello world'''};
 				asElement ];
-		elementWeight: 0.6
+		elementWeight: 0.5
 ]
 
 { #category : #accessing }
