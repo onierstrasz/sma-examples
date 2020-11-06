@@ -26,6 +26,32 @@ EagerTestCounter >> count [
 ]
 
 { #category : #accessing }
+EagerTestCounter >> eagerTestsDemo [
+	"Find all eager tests without using a visitor"
+
+	| allNodes eagerTests |
+	allNodes := [ :node | 
+			| withAllChildren traversal nextNode |
+	withAllChildren := OrderedCollection new.
+	traversal := OrderedCollection with: node.
+	[ traversal notEmpty ]
+		whileTrue: [ nextNode := traversal removeFirst.
+			withAllChildren add: nextNode.
+			traversal addAllFirst: nextNode children ].
+	withAllChildren ].
+	eagerTests := [ :aClass | 
+	aClass methods
+		select: [ :m | 
+			| asserts |
+			asserts := (allNodes value: m parseTree)
+				select: [ :each | 
+					(each isKindOf: RBMessageNode)
+						and: [ each selector beginsWith: 'assert' ] ].
+			asserts size > 1 ] ].
+	^ eagerTests value: StringTest
+]
+
+{ #category : #accessing }
 EagerTestCounter >> initialize [
 	super initialize.
 	count := 0
